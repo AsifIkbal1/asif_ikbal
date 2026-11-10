@@ -6,7 +6,7 @@ import portrait from "@/assets/asif-portrait.png.asset.json";
 
 export function Navbar() {
   const linkCls =
-    "rounded-full px-4 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground md:text-base";
+    "rounded-full px-2.5 py-2 text-sm sm:px-4 font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground md:text-base";
   return (
     <header className="sticky top-0 z-40 px-3 pt-3">
       <nav className="glass shadow-soft mx-auto flex max-w-6xl items-center justify-between rounded-full px-4 py-2 md:px-6">
@@ -17,7 +17,7 @@ export function Navbar() {
             whileHover={{ rotate: 8, scale: 1.1 }}
             className="h-10 w-10 rounded-full object-cover object-top ring-2 ring-primary"
           />
-          <span className="text-lg font-bold md:text-xl">{site.name}</span>
+          <span className="hidden text-lg font-bold sm:inline md:text-xl">{site.name}</span>
         </Link>
         <div className="flex items-center gap-1">
           <Link to="/" className={linkCls} activeProps={{ className: "bg-secondary !text-primary" }} activeOptions={{ exact: true }}>
@@ -25,6 +25,9 @@ export function Navbar() {
           </Link>
           <Link to="/about" className={linkCls} activeProps={{ className: "bg-secondary !text-primary" }}>
             About Me
+          </Link>
+          <Link to="/kacchi" className={linkCls} activeProps={{ className: "bg-secondary !text-primary" }}>
+            {site.kacchi.navLabel}
           </Link>
         </div>
       </nav>

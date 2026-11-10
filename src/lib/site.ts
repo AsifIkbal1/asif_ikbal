@@ -50,6 +50,24 @@ export const site = {
   ],
   instagramJoke: "Instagram: গাঙ্গা খাইয়া কুল পাই না, Instagram চালামু কখন! 😅",
   footerLine: "Let's Grab a Coffee Date! ☕",
+  kacchi: {
+    navLabel: "কাচ্চি/Kacchi",
+    title: "কাচ্চি / Kacchi",
+    bn: "কাজ শুরুর আগে অর্ধেক প্লেট কাচ্চির জন্য 50% advance দিয়ে দিয়েন! 😂 আর project delivery-এর সময় বাকি 50% দিয়ে দিয়েন।",
+    en: "Before I start, please send 50% upfront to cover half a plate of Kacchi! 😂😂 And you can pay the remaining 50% when I deliver the project. 🍚",
+    cta: "Order Now",
+    payTitle: "Pay for your Kacchi 🍛",
+    paySubtitle: "Choose how you'd like to pay — the amount is as we agreed.",
+    mobileNumber: "+8801786961727",
+    card: {
+      number: "5262 3830 9631 7039",
+      holder: "MD ASIF IKBAL",
+      bank: "United Commercial Bank",
+    },
+    stripeNote: "Card payments via Stripe are sent as a secure link. Message me on WhatsApp and I'll send you one.",
+    doneTitle: "Request sent! 🎉",
+    doneText: "Thanks! I'll check the payment and confirm on WhatsApp soon.",
+  },
   // Overrides for GitHub project cards, matched by repo name.
   repoOverrides: {
     "Bluk-SMS": {
