@@ -9,7 +9,7 @@ const schema = z.object({
 });
 
 const N8N_WEBHOOK_URL =
-  process.env["N8N_CHAT_WEBHOOK_URL"] || "https://snbd.app.n8n.cloud/webhook/website-chat";
+  process.env["N8N_CHAT_WEBHOOK_URL"] || "http://localhost:5678/webhook/website-chat";
 
 export const askAssistant = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => schema.parse(d))
