@@ -267,7 +267,7 @@ function ManualPay({ method }: { method: (typeof PAYMENT_METHODS)[number] }) {
         </div>
         <label className="block">
           <span className="mb-1 block font-semibold">Transaction ID</span>
-          <input className={cn(inputCls, "font-mono uppercase")} value={txn} onChange={(e) => setTxn(e.target.value)} placeholder="e.g. 9B6A2C1P0Z" maxLength={40} />
+          <input className={cn(inputCls, "font-mono uppercase placeholder:font-sans placeholder:normal-case")} value={txn} onChange={(e) => setTxn(e.target.value)} placeholder="e.g. 9B6A2C1P0Z" maxLength={40} />
           <span className="mt-1 block text-sm text-muted-foreground">
             {isCard ? "Use the transaction ID from your bank statement." : "Enter the transaction ID you received after sending the money."}
           </span>

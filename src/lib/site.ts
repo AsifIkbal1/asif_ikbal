@@ -52,7 +52,7 @@ export const site = {
   footerLine: "Let's Grab a Coffee Date! ☕",
   kacchi: {
     navLabel: "কাচ্চি/Kacchi",
-    title: "কাচ্চি / Kacchi 🍛",
+    title: "কাচ্চি / Kacchi",
     bn: "কাজ শুরুর আগে অর্ধেক প্লেট কাচ্চির জন্য 50% advance দিয়ে দিয়েন! 😂 আর project delivery-এর সময় বাকি 50% দিয়ে দিয়েন।",
     en: "Before I start, please send 50% upfront to cover half a plate of Kacchi! 😂😂 And you can pay the remaining 50% when I deliver the project. 🍚",
     cta: "Order Now",
