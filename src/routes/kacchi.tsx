@@ -38,7 +38,7 @@ function Kacchi() {
     <section className="relative px-4 pb-12 pt-16 md:pt-24">
       <Blobs />
       <FloatingEmoji emoji="🍛" className="right-[8%] top-16" />
-      <FloatingEmoji emoji="🍗" className="left-[6%] top-48" delay={1} />
+      <FloatingEmoji emoji="🍗" className="left-[6%] top-24 md:top-48" delay={1} />
       <div className="relative z-10 mx-auto max-w-3xl">
         <AnimatePresence mode="wait">
           {!showPay ? (
