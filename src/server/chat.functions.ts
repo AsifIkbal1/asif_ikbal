@@ -16,20 +16,54 @@ export const askAssistant = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const key = process.env.LOVABLE_API_KEY;
     if (!key) return { reply: "Sorry, the assistant isn't available right now.", error: true };
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Lovable-API-Key": key,
+        "X-Lovable-AIG-SDK": "fetch",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
-        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...data.messages],
+        model: "openai/gpt-6-astra",
+        instructions: SYSTEM_PROMPT,
+        input: data.messages.map((m) => ({ role: m.role, content: m.content })),
+        reasoning: { effort: "low" },
+        store: false,
+        stream: true,
       }),
     });
+
     if (res.status === 429) return { reply: "I'm getting a lot of questions right now — please try again in a moment! 🙏", error: true };
     if (res.status === 402) return { reply: "The assistant is taking a break. Please click 'Add an Order' to reach Asif directly!", error: true };
-    if (!res.ok) {
-      console.error("AI gateway error", res.status, await res.text());
+    if (!res.ok || !res.body) {
+      console.error("AI gateway error", res.status, await res.text().catch(() => ""));
       return { reply: "Oops, something went wrong. Please try again.", error: true };
     }
-    const json = (await res.json()) as { choices?: { message?: { content?: string } }[] };
-    return { reply: json.choices?.[0]?.message?.content?.trim() || "…", error: false };
+
+    // Consume the SSE stream and collect the text deltas.
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let text = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.slice(5).trim();
+        if (!payload || payload === "[DONE]") continue;
+        try {
+          const evt = JSON.parse(payload) as { type?: string; delta?: string };
+          if (evt.type === "response.output_text.delta" && evt.delta) text += evt.delta;
+        } catch {
+          /* ignore partial lines */
+        }
+      }
+    }
+    return { reply: text.trim() || "Sorry, I didn't catch that — could you rephrase?", error: false };
   });
