@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Check, Copy, CreditCard, Globe, MessageCircle } from "lucide-react";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import confetti from "canvas-confetti";
-import { site, socialsWhatsapp } from "@/lib/site";
+import { site } from "@/lib/site";
 import { submitPayment, PAYMENT_METHODS } from "@/lib/payment.functions";
-import { Blobs, FloatingEmoji, Reveal } from "@/components/site/Bits";
+import { Blobs, FloatingEmoji } from "@/components/site/Bits";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/kacchi")({
@@ -166,7 +166,7 @@ function StripeInfo() {
       <div className="text-6xl">💳</div>
       <h2 className="mt-3 text-3xl font-bold">Credit / Debit Card</h2>
       <p className="mx-auto mt-3 max-w-md text-lg text-muted-foreground">{site.kacchi.stripeNote}</p>
-      <a href={socialsWhatsapp()} target="_blank" rel="noreferrer" className="bg-gradient-animated shadow-glow mt-6 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-lg font-semibold text-primary-foreground transition hover:-translate-y-1">
+      <a href={site.socials.find((x) => x.label === "WhatsApp")?.href ?? "https://wa.me/8801786961727"} target="_blank" rel="noreferrer" className="bg-gradient-animated shadow-glow mt-6 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-lg font-semibold text-primary-foreground transition hover:-translate-y-1">
         <MessageCircle className="h-5 w-5" /> Message me on WhatsApp
       </a>
     </div>
@@ -287,5 +287,3 @@ function ManualPay({ method }: { method: (typeof PAYMENT_METHODS)[number] }) {
     </div>
   );
 }
-
-export { Reveal };
