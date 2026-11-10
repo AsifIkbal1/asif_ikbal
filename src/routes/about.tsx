@@ -54,14 +54,14 @@ function About() {
         <Blobs />
         <FloatingEmoji emoji="💜" className="right-[10%] top-20" />
         <FloatingEmoji emoji="⚙️" className="bottom-6 left-[8%]" delay={1.2} />
-        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[auto_1fr]">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[auto_1fr] md:gap-20">
           <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 120 }} className="relative mx-auto">
             <div className="animate-blob bg-hero-gradient shadow-glow h-56 w-56 p-2 md:h-72 md:w-72">
               <img src={portrait.url} alt={site.name} className="animate-blob h-full w-full bg-card object-cover object-top" />
             </div>
             <img src={roundPic.url} alt={`${site.name} illustration`} className="shadow-soft absolute -bottom-4 -right-6 h-24 w-24 rounded-full border-4 border-card object-cover object-top md:h-28 md:w-28" />
           </motion.div>
-          <div className="text-center md:text-left">
+          <div className="relative z-10 text-center md:text-left">
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-semibold text-bubblegum">Hello, I'm</motion.p>
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gradient-animated text-5xl font-bold md:text-7xl">
               {site.name}
