@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Send, X } from "lucide-react";
-import { askAssistant } from "@/server/chat.functions";
+import { askAssistant } from "@/lib/chat.functions";
 
 type Msg = { role: "user" | "assistant"; content: string };
 

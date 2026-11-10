@@ -6,7 +6,7 @@ import confetti from "canvas-confetti";
 import { format, startOfDay } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { supabase } from "@/integrations/supabase/client";
-import { submitOrder } from "@/server/order.functions";
+import { submitOrder } from "@/lib/order.functions";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
