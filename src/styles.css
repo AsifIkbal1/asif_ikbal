@@ -41,6 +41,10 @@
   --color-sky: var(--sky);
   --color-mint: var(--mint);
   --color-sunny: var(--sunny);
+  --color-brand-facebook: var(--brand-facebook);
+  --color-brand-linkedin: var(--brand-linkedin);
+  --color-brand-x: var(--brand-x);
+  --color-brand-whatsapp: var(--brand-whatsapp);
   --color-glass: var(--glass);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -85,6 +89,10 @@
   --sky: oklch(0.66 0.17 245);
   --mint: oklch(0.78 0.14 170);
   --sunny: oklch(0.88 0.16 95);
+  --brand-facebook: #1877f2;
+  --brand-linkedin: #0a66c2;
+  --brand-x: #000000;
+  --brand-whatsapp: #25d366;
   --glass: oklch(1 0 0 / 0.6);
 
   --gradient-hero: linear-gradient(120deg, var(--grape), var(--bubblegum), var(--tangerine), var(--sky), var(--grape));

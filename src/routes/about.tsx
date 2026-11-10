@@ -1,25 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Download, ExternalLink, Facebook, Github, Instagram, Linkedin, MessageCircle, Star } from "lucide-react";
+import { Download, ExternalLink, Github, Star } from "lucide-react";
+import { FaFacebook, FaLinkedin, FaWhatsapp, FaXTwitter } from "react-icons/fa6";
 import type { ComponentType } from "react";
-
-function XLogo({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
-
-const socialIcons: Record<string, ComponentType<{ className?: string }>> = {
-  Facebook,
-  LinkedIn: Linkedin,
-  "X / Twitter": XLogo,
-  WhatsApp: MessageCircle,
-};
 import portrait from "@/assets/asif-portrait.png.asset.json";
-import roundPic from "@/assets/asif-round.png.asset.json";
+
+const socialIcons: Record<string, { Icon: ComponentType<{ className?: string }>; color: string }> = {
+  Facebook: { Icon: FaFacebook, color: "text-brand-facebook" },
+  LinkedIn: { Icon: FaLinkedin, color: "text-brand-linkedin" },
+  "X / Twitter": { Icon: FaXTwitter, color: "text-brand-x" },
+  WhatsApp: { Icon: FaWhatsapp, color: "text-brand-whatsapp" },
+};
 import { site } from "@/lib/site";
 import { Blobs, FloatingEmoji, OrderButton, Reveal } from "@/components/site/Bits";
 
@@ -93,23 +85,19 @@ function About() {
               ))}
             </ul>
             <p className="mt-4 text-justify text-muted-foreground"><span className="font-semibold text-foreground">Objective:</span> {site.about.objective}</p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
-              <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="bg-hero-gradient shadow-glow inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-primary-foreground transition hover:-translate-y-1">
+            <div className="mt-6 flex flex-wrap justify-center gap-2 md:justify-start lg:flex-nowrap">
+              <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="bg-hero-gradient shadow-glow inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 font-semibold text-primary-foreground transition hover:-translate-y-1">
                 <Download className="h-5 w-5" /> Resume
               </a>
               {site.socials.map((so) => {
-                const Icon = socialIcons[so.label] ?? MessageCircle;
+                const s = socialIcons[so.label];
+                const Icon = s?.Icon ?? FaWhatsapp;
                 return (
-                  <a key={so.label} href={so.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-3 font-medium text-primary transition hover:-translate-y-1">
-                    <Icon className="h-5 w-5 shrink-0" /> {so.label}
+                  <a key={so.label} href={so.href} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-secondary px-4 py-2.5 font-medium text-foreground transition hover:-translate-y-1">
+                    <Icon className={`h-5 w-5 shrink-0 ${s?.color ?? ""}`} /> {so.label}
                   </a>
                 );
               })}
-              <span className="inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full bg-secondary py-1.5 pl-1.5 pr-4 text-sm font-medium text-primary">
-                <img src={roundPic.url} alt={site.name} className="h-9 w-9 shrink-0 rounded-full border-2 border-card object-cover object-top" />
-                <Instagram className="h-5 w-5 shrink-0" />
-                <span className="min-w-0">{site.instagramJoke}</span>
-              </span>
             </div>
           </div>
         </div>

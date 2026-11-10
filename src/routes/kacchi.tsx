@@ -65,7 +65,7 @@ function Kacchi() {
                 whileTap={{ scale: 0.96 }}
                 className="bg-gradient-animated shadow-glow mt-10 inline-flex items-center gap-2 rounded-full px-10 py-4 text-xl font-semibold text-primary-foreground"
               >
-                🛒 {site.kacchi.cta}
+                💳 {site.kacchi.cta}
               </motion.button>
             </motion.div>
           ) : (
