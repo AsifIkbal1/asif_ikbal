@@ -41,7 +41,7 @@ export const site = {
       "To work as a Machine Learning & Automation Specialist, driving AI innovation, intelligent automation, predictive analytics and business transformation.",
     skills: ["Python", "Generative AI", "Agentic AI", "NLP", "LLMs", "RAG", "LangChain", "n8n", "API Integration", "Data Visualization", "Machine Learning", "Predictive Analytics"],
   },
-  resumeUrl: "https://drive.google.com/uc?export=download&id=1TvoB2jkVTj9jq0PZ0g-3oV-3CH_xlUmv",
+  resumeUrl: "https://drive.google.com/file/d/1TvoB2jkVTj9jg0PZ0g-3oV-3CH_xlUmv/view?usp=sharing",
   socials: [
     { label: "Facebook", href: "https://www.facebook.com/asifikbalmamun220" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/md-asif-ikbal/" },

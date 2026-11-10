@@ -9,7 +9,7 @@ export function Navbar() {
     "rounded-full px-2.5 py-2 text-sm sm:px-4 font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground md:text-base";
   return (
     <header className="sticky top-0 z-40 px-3 pt-3">
-      <nav className="glass shadow-soft mx-auto flex max-w-6xl items-center justify-between rounded-full px-4 py-2 md:px-6">
+      <nav className="glass shadow-soft border-0 mx-auto flex max-w-6xl items-center justify-between rounded-full px-4 py-2 md:px-6">
         <Link to="/" className="flex items-center gap-2">
           <motion.img
             src={portrait.url}

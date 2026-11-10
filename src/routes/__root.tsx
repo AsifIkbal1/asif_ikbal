@@ -129,13 +129,21 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <OrderProvider>
-        <Navbar />
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
-        <FloatingOrderButton />
-        <ChatBubble />
+        <div className="relative min-h-screen">
+          <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+            <div className="animate-blob absolute -left-32 -top-32 h-[42rem] w-[42rem] bg-grape/35 blur-3xl" />
+            <div className="animate-blob absolute -right-32 -top-20 h-[40rem] w-[40rem] bg-bubblegum/30 blur-3xl [animation-delay:-4s]" />
+            <div className="animate-blob absolute top-1/4 left-1/3 h-[30rem] w-[30rem] bg-tangerine/20 blur-3xl [animation-delay:-8s]" />
+            <div className="animate-blob absolute bottom-10 right-1/4 h-80 w-80 bg-sky/20 blur-3xl [animation-delay:-2s]" />
+          </div>
+          <Navbar />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+          <FloatingOrderButton />
+          <ChatBubble />
+        </div>
       </OrderProvider>
     </QueryClientProvider>
   );
