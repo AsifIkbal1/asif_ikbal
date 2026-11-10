@@ -1,7 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Download, ExternalLink, Github, Star } from "lucide-react";
+import { Download, ExternalLink, Facebook, Github, Instagram, Linkedin, MessageCircle, Star } from "lucide-react";
+import type { ComponentType } from "react";
+
+function XLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+const socialIcons: Record<string, ComponentType<{ className?: string }>> = {
+  Facebook,
+  LinkedIn: Linkedin,
+  "X / Twitter": XLogo,
+  WhatsApp: MessageCircle,
+};
 import portrait from "@/assets/asif-portrait.png.asset.json";
 import roundPic from "@/assets/asif-round.png.asset.json";
 import { site } from "@/lib/site";
@@ -59,7 +75,6 @@ function About() {
             <div className="animate-blob bg-hero-gradient shadow-glow h-56 w-56 p-2 md:h-72 md:w-72">
               <img src={portrait.url} alt={site.name} className="animate-blob h-full w-full bg-card object-cover object-top" />
             </div>
-            <img src={roundPic.url} alt={`${site.name} illustration`} className="shadow-soft absolute -bottom-4 -right-6 h-24 w-24 rounded-full border-4 border-card object-cover object-top md:h-28 md:w-28" />
           </motion.div>
           <div className="relative z-10 text-center md:text-left">
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-semibold text-bubblegum">Hello, I'm</motion.p>
@@ -69,26 +84,33 @@ function About() {
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-3 text-xl font-medium md:text-2xl">
               {site.about.title}
             </motion.p>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="mt-5 text-lg text-muted-foreground">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="mt-5 text-justify text-lg text-muted-foreground">
               {site.about.intro}
             </motion.p>
-            <ul className="mt-4 space-y-1 text-left text-muted-foreground">
+            <ul className="mt-4 space-y-1 text-justify text-muted-foreground">
               {site.about.highlights.map((h) => (
                 <li key={h}>✨ {h}</li>
               ))}
             </ul>
-            <p className="mt-4 text-muted-foreground"><span className="font-semibold text-foreground">Objective:</span> {site.about.objective}</p>
+            <p className="mt-4 text-justify text-muted-foreground"><span className="font-semibold text-foreground">Objective:</span> {site.about.objective}</p>
             <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
               <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="bg-hero-gradient shadow-glow inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-primary-foreground transition hover:-translate-y-1">
                 <Download className="h-5 w-5" /> Resume
               </a>
-              {site.socials.map((so) => (
-                <a key={so.label} href={so.href} target="_blank" rel="noreferrer" className="rounded-full bg-secondary px-5 py-3 font-medium text-primary transition hover:-translate-y-1">
-                  {so.label}
-                </a>
-              ))}
+              {site.socials.map((so) => {
+                const Icon = socialIcons[so.label] ?? MessageCircle;
+                return (
+                  <a key={so.label} href={so.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-3 font-medium text-primary transition hover:-translate-y-1">
+                    <Icon className="h-5 w-5 shrink-0" /> {so.label}
+                  </a>
+                );
+              })}
+              <span className="inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full bg-secondary py-1.5 pl-1.5 pr-4 text-sm font-medium text-primary">
+                <img src={roundPic.url} alt={site.name} className="h-9 w-9 shrink-0 rounded-full border-2 border-card object-cover object-top" />
+                <Instagram className="h-5 w-5 shrink-0" />
+                <span className="min-w-0">{site.instagramJoke}</span>
+              </span>
             </div>
-            <p className="mt-3 text-sm text-muted-foreground">{site.instagramJoke}</p>
           </div>
         </div>
       </section>
