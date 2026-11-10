@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CalendarDays, FileText, Loader2, UploadCloud, Video, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, FileText, UploadCloud, Video, X } from "lucide-react";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import confetti from "canvas-confetti";
 import { format, startOfDay } from "date-fns";
@@ -193,9 +193,6 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
               e.preventDefault();
               next();
             }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && (e.target as HTMLElement).tagName === "TEXTAREA" && !(e.metaKey || e.ctrlKey)) return;
-            }}
           >
             <AnimatePresence mode="wait" custom={dir}>
               <motion.div
@@ -326,7 +323,7 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
               )}
               <motion.button type="submit" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="bg-gradient-animated shadow-glow inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-primary-foreground">
                 {step === TOTAL - 1 ? (info.trim() ? "Submit order" : "Skip & submit") : "Continue"}
-                {step === TOTAL - 1 ? <Loader2 className="hidden" /> : <ArrowRight className="h-5 w-5" />}
+                {step < TOTAL - 1 && <ArrowRight className="h-5 w-5" />}
               </motion.button>
               <span className="hidden text-sm text-muted-foreground md:inline">press Enter ↵</span>
             </div>
