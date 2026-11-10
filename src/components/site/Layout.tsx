@@ -26,6 +26,9 @@ export function Navbar() {
           <Link to="/about" className={linkCls} activeProps={{ className: "bg-secondary !text-primary" }}>
             About Me
           </Link>
+          <Link to="/kacchi" className={linkCls} activeProps={{ className: "bg-secondary !text-primary" }}>
+            {site.kacchi.navLabel}
+          </Link>
         </div>
       </nav>
     </header>
