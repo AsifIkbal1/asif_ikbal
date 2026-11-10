@@ -94,7 +94,7 @@ function About() {
                 const Icon = s?.Icon ?? FaWhatsapp;
                 return (
                   <a key={so.label} href={so.href} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-secondary px-4 py-2.5 font-medium text-foreground transition hover:-translate-y-1">
-                    <Icon className={`h-5 w-5 shrink-0 ${s?.color ?? ""}`} /> {so.label}
+                    <Icon className={`h-5 w-5 shrink-0 ${s?.color ?? ""}`} /> {so.label === "WhatsApp" ? "+880 1786-961727" : so.label}
                   </a>
                 );
               })}
