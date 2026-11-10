@@ -14,7 +14,7 @@ const schema = z.object({
 export const askAssistant = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => schema.parse(d))
   .handler(async ({ data }) => {
-    const key = process.env.LOVABLE_API_KEY;
+    const key = process.env['LOVABLE_API_KEY'];
     if (!key) return { reply: "Sorry, the assistant isn't available right now.", error: true };
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {

@@ -38,7 +38,7 @@ export const submitOrder = createServerFn({ method: "POST" })
       throw new Error("Could not save your order. Please try again.");
     }
 
-    const webhook = process.env.N8N_WEBHOOK_URL;
+    const webhook = process.env['N8N_WEBHOOK_URL'];
     if (webhook) {
       try {
         const { data: signed } = await supabaseAdmin.storage
