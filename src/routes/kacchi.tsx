@@ -38,7 +38,7 @@ function Kacchi() {
     <section className="relative px-4 pb-12 pt-16 md:pt-24">
       <Blobs />
       <FloatingEmoji emoji="🍛" className="right-[8%] top-16" />
-      <FloatingEmoji emoji="😂" className="left-[6%] top-48" delay={1} />
+      <FloatingEmoji emoji="🍗" className="left-[6%] top-48" delay={1} />
       <div className="relative z-10 mx-auto max-w-3xl">
         <AnimatePresence mode="wait">
           {!showPay ? (
@@ -46,7 +46,14 @@ function Kacchi() {
               <motion.div animate={{ rotate: [0, -10, 10, 0], scale: [1, 1.1, 1] }} transition={{ duration: 2.5, repeat: Infinity }} className="text-7xl md:text-8xl">
                 🍛
               </motion.div>
-              <h1 className="text-gradient-animated mt-4 text-5xl font-bold md:text-7xl">{site.kacchi.title}</h1>
+              <h1 className="mt-4 flex flex-wrap items-center justify-center gap-x-3 text-5xl font-bold md:text-7xl">
+                {site.kacchi.title.split(" / ").map((part, i) => (
+                  <span key={part} className="flex items-center gap-x-3">
+                    {i > 0 && <span className="text-gradient-animated px-1 py-3 leading-[1.5]">/</span>}
+                    <span className="text-gradient-animated inline-block px-2 py-3 leading-[1.5]">{part}</span>
+                  </span>
+                ))}
+              </h1>
               <div className="glass shadow-soft mt-8 space-y-4 rounded-[2rem] p-6 text-lg md:p-8 md:text-xl">
                 <p>{site.kacchi.bn}</p>
                 <p className="text-muted-foreground">{site.kacchi.en}</p>

@@ -48,7 +48,7 @@ export const site = {
     { label: "X / Twitter", href: "https://x.com/mdasif011996?s=11" },
     { label: "WhatsApp", href: "https://wa.me/8801786961727" },
   ],
-  instagramJoke: "Instagram: গাঙ্গা খাইয়া কুল পাই না, Instagram চালামু কখন! 😅",
+  instagramJoke: "গাঙ্গা খাইয়া কুল পাই না, Instagram চালামু কখন! 😅",
   footerLine: "Let's Grab a Coffee Date! ☕",
   kacchi: {
     navLabel: "কাচ্চি/Kacchi",
