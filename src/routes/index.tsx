@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { site, toneBg } from "@/lib/site";
-import { Blobs, FloatingEmoji, OrderButton, Reveal } from "@/components/site/Bits";
+import { Blobs, FloatingEmoji, Reveal } from "@/components/site/Bits";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -44,9 +44,6 @@ function Home() {
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-2xl">
             {site.hero.subtitle}
           </motion.p>
-          <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.9, type: "spring" }} className="mt-10">
-            <OrderButton />
-          </motion.div>
         </div>
       </section>
 
@@ -97,9 +94,6 @@ function Home() {
               </Reveal>
             ))}
           </div>
-          <Reveal className="mt-14 text-center">
-            <OrderButton size="md" />
-          </Reveal>
         </div>
       </section>
     </>

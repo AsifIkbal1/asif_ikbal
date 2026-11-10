@@ -29,7 +29,7 @@ export const site = {
     { emoji: "🎉", title: "Project delivered", text: "You get a polished, working result." },
   ],
   about: {
-    title: "Machine Learning & Automation Specialist",
+    title: "AI, SaaS & Automation Specialist",
     intro:
       "Dynamic Machine Learning & Automation professional with 2+ years of experience in AI, data science, machine learning, workflow automation and predictive analytics. I build AI-powered workflows, intelligent apps, chatbots, voice automation, forecasting models and process digitalization solutions.",
     highlights: [
@@ -53,8 +53,8 @@ export const site = {
   kacchi: {
     navLabel: "কাচ্চি/Kacchi",
     title: "কাচ্চি / Kacchi",
-    bn: "কাজ শুরুর আগে অর্ধেক প্লেট কাচ্চির জন্য 50% advance দিয়ে দিয়েন! 😂 আর project delivery-এর সময় বাকি 50% দিয়ে দিয়েন।",
-    en: "Before I start, please send 50% upfront to cover half a plate of Kacchi! 😂😂 And you can pay the remaining 50% when I deliver the project. 🍚",
+    bn: "কাজ শুরুর আগে অর্ধেক প্লেট কাচ্চির জন্য 50% advance দিয়ে দিয়েন! 🍗 আর project delivery-এর সময় বাকি 50% দিয়ে দিয়েন।",
+    en: "Before I start, please send 50% upfront to cover half a plate of Kacchi! 🍗 And you can pay the remaining 50% when I deliver the project. 🍚",
     cta: "Payment",
     payTitle: "Pay for your Kacchi 🍛",
     paySubtitle: "Choose how you'd like to pay — the amount is as we agreed.",
