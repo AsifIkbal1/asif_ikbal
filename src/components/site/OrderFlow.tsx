@@ -43,7 +43,7 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
   }, [onClose, status]);
 
   const slotDate = (d: Date, t: string) => {
-    const [h, m] = t.split(":").map(Number);
+    const [h = 0, m = 0] = t.split(":").map(Number);
     const x = new Date(d);
     x.setHours(h, m, 0, 0);
     return x;
@@ -218,7 +218,7 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
                   <>
                     <h2 className="mb-6 text-3xl font-bold md:text-5xl">What's your WhatsApp number? 📱</h2>
                     <div className="border-b-4 border-primary/30 py-3 focus-within:border-primary">
-                      <PhoneInput international defaultCountry="BD" value={phone} onChange={setPhone} placeholder="Enter phone number" autoFocus />
+                      <PhoneInput international defaultCountry="BD" value={phone ?? ""} onChange={(v) => setPhone(v ?? undefined)} placeholder="Enter phone number" autoFocus />
                     </div>
                   </>
                 )}
