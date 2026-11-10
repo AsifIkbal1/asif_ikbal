@@ -65,5 +65,5 @@ export const askAssistant = createServerFn({ method: "POST" })
         }
       }
     }
-    return { reply: text.trim() || "Sorry, I didn't catch that — could you rephrase?", error: false };
+    return { reply: text.replace(/\*\*(.+?)\*\*/g, "$1").trim() || "Sorry, I didn't catch that — could you rephrase?", error: false };
   });
