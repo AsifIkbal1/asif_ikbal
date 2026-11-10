@@ -44,6 +44,33 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_requests: {
+        Row: {
+          created_at: string
+          id: string
+          method: string
+          name: string
+          transaction_id: string
+          whatsapp_number: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          method: string
+          name: string
+          transaction_id: string
+          whatsapp_number: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          method?: string
+          name?: string
+          transaction_id?: string
+          whatsapp_number?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
