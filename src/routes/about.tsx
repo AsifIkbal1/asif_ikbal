@@ -47,7 +47,7 @@ function About() {
       if (!r.ok) throw new Error("github");
       const list = (await r.json()) as Repo[];
       return list
-        .filter((x) => !x.fork)
+        .filter((x) => !x.fork && x.name.toLowerCase() !== "asif_ikbal")
         .slice(0, 6)
         .map((x) => ({ ...x, ...(site.repoOverrides[x.name] ?? {}) }));
     },
