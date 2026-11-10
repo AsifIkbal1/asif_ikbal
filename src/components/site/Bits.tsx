@@ -64,6 +64,7 @@ export function OrderButton({ className, size = "lg" }: { className?: string; si
 export function FloatingOrderButton() {
   const { open } = useOrder();
   return (
+    <div className="fixed bottom-5 left-5 z-40 md:bottom-6 md:left-0 md:right-0 md:flex md:justify-center md:pointer-events-none">
     <motion.button
       type="button"
       onClick={open}
@@ -72,11 +73,11 @@ export function FloatingOrderButton() {
       transition={{ opacity: { duration: 0.4 }, y: { duration: 2.4, repeat: Infinity, ease: "easeInOut" }, rotate: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
       whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.95 }}
-      className="bg-gradient-animated shadow-glow fixed bottom-5 left-5 z-40 inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-primary-foreground md:bottom-6 md:left-1/2 md:-translate-x-1/2 md:px-7 md:py-4 md:text-lg"
-      style={{ x: undefined }}
+      className="bg-gradient-animated shadow-glow pointer-events-auto inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-primary-foreground md:px-7 md:py-4 md:text-lg"
     >
       <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.2, repeat: Infinity }}>🛒</motion.span>
       Add an Order
     </motion.button>
+    </div>
   );
 }
