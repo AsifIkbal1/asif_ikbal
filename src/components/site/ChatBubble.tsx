@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Send, X } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { askAssistant } from "@/lib/chat.functions";
+import { site } from "@/lib/site";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -59,9 +61,20 @@ export function ChatBubble() {
                   <p className="text-xs opacity-90">Usually replies instantly</p>
                 </div>
               </div>
-              <button onClick={() => setOpen(false)} aria-label="Close chat" className="rounded-full p-2 hover:bg-primary-foreground/20">
-                <X className="h-5 w-5" />
-              </button>
+              <div className="flex items-center gap-1">
+                <a
+                  href="https://wa.me/8801786961727"
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Chat directly on WhatsApp"
+                  className="rounded-full bg-primary-foreground/20 p-2 text-primary-foreground transition hover:bg-primary-foreground/30 hover:scale-105"
+                >
+                  <FaWhatsapp className="h-5 w-5" />
+                </a>
+                <button onClick={() => setOpen(false)} aria-label="Close chat" className="rounded-full p-2 hover:bg-primary-foreground/20">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
             </div>
 
             <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto bg-secondary/40 p-4">
