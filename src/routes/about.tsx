@@ -13,7 +13,7 @@ const socialIcons: Record<string, { Icon: ComponentType<{ className?: string }>;
   WhatsApp: { Icon: FaWhatsapp, color: "text-brand-whatsapp" },
 };
 import { site } from "@/lib/site";
-import { Blobs, FloatingEmoji, OrderButton, Reveal } from "@/components/site/Bits";
+import { Blobs, FloatingEmoji, Reveal } from "@/components/site/Bits";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -160,17 +160,6 @@ function About() {
         </div>
       </section>
 
-      <section className="px-4 py-14">
-        <Reveal className="bg-hero-gradient shadow-soft mx-auto max-w-4xl rounded-[2.5rem] p-1">
-          <div className="rounded-[2.3rem] bg-card px-6 py-12 text-center">
-            <h2 className="text-3xl font-bold md:text-5xl">Ready to build something awesome? 🚀</h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">Tell me about your idea — it only takes a minute.</p>
-            <div className="mt-8">
-              <OrderButton />
-            </div>
-          </div>
-        </Reveal>
-      </section>
     </>
   );
 }
