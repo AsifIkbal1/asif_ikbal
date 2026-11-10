@@ -17,11 +17,6 @@ export const submitOrder = createServerFn({ method: "POST" })
     }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    const { data: obj } = await supabaseAdmin.storage.from("order-pdfs").list("orders", {
-      search: data.pdfPath.slice("orders/".length),
-    });
-    if (!obj || obj.length === 0) throw new Error("The PDF upload could not be found. Please upload it again.");
-
     const { data: order, error } = await supabaseAdmin
       .from("orders")
       .insert({
