@@ -29,11 +29,46 @@ export const site = {
     { emoji: "🎉", title: "Project delivered", text: "You get a polished, working result." },
   ],
   about: {
-    title: "Software, Website, SaaS & Automation Developer",
+    title: "Machine Learning & Automation Specialist",
     intro:
-      "Hi! I'm Asif — I love turning messy ideas into clean, working products. Whether it's a website, a SaaS app or an n8n workflow that saves you hours, I handle everything from planning to launch. (Edit this intro in src/lib/site.ts.)",
-    skills: ["React", "TypeScript", "Node.js", "Python", "Supabase", "n8n", "Automation", "APIs", "SaaS", "AI Integrations"],
+      "Dynamic Machine Learning & Automation professional with 2+ years of experience in AI, data science, machine learning, workflow automation and predictive analytics. I build AI-powered workflows, intelligent apps, chatbots, voice automation, forecasting models and process digitalization solutions.",
+    highlights: [
+      "Guided 200+ students in Python, Machine Learning, data analysis and project development",
+      "Built 550+ AI/ML projects across diverse applications",
+      "Strong in EDA, business analytics, operational optimization and data-driven decisions",
+    ],
+    objective:
+      "To work as a Machine Learning & Automation Specialist, driving AI innovation, intelligent automation, predictive analytics and business transformation.",
+    skills: ["Python", "Generative AI", "Agentic AI", "NLP", "LLMs", "RAG", "LangChain", "n8n", "API Integration", "Data Visualization", "Machine Learning", "Predictive Analytics"],
   },
+  resumeUrl: "https://drive.google.com/uc?export=download&id=1TvoB2jkVTj9jq0PZ0g-3oV-3CH_xlUmv",
+  socials: [
+    { label: "Facebook", href: "https://www.facebook.com/asifikbalmamun220" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/md-asif-ikbal/" },
+    { label: "X / Twitter", href: "https://x.com/mdasif011996?s=11" },
+    { label: "WhatsApp", href: "https://wa.me/8801786961727" },
+  ],
+  instagramJoke: "Instagram: গাঙ্গা খাইয়া কুল পাই না, Instagram চালামু কখন! 😅",
+  footerLine: "Let's Grab a Coffee Date! ☕",
+  // Overrides for GitHub project cards, matched by repo name.
+  repoOverrides: {
+    "Bluk-SMS": {
+      description:
+        "Proprietary & Confidential Software. Owner: Ritorica Information Technology Bangladesh (asif.zahid@ritorica.com.bd). Copyright © 2026 Ritorica Information Technology Bangladesh. All Rights Reserved.",
+    },
+    "My-ios-App": {
+      name: "CortexLM",
+      description:
+        "CortexLM is an open-source, educational framework developed by Educortex AI. It is designed to expose the mathematical and engineering structures of modern Decoder-Only Transformer models (such as LLaMA and GPT) without relying on opaque high-level abstractions like PyTorch's nn.Transformer or HuggingFace wrapper models.",
+      language: "Python",
+    },
+    "AI-student": {
+      name: "My-n8n-projects",
+      description:
+        "This repository contains my n8n automation workflows and projects. It is mainly used for learning, experimenting, and building practical automation solutions using n8n.",
+      language: "n8n",
+    },
+  } as Record<string, { name?: string; description?: string; language?: string }>,
 };
 
 export type Tone = "grape" | "bubblegum" | "tangerine" | "sky" | "mint" | "sunny";

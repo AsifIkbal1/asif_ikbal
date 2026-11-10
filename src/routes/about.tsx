@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Star } from "lucide-react";
+import { Download, ExternalLink, Github, Star } from "lucide-react";
+import portrait from "@/assets/asif-portrait.png.asset.json";
+import roundPic from "@/assets/asif-round.png.asset.json";
 import { site } from "@/lib/site";
 import { Blobs, FloatingEmoji, OrderButton, Reveal } from "@/components/site/Bits";
 
@@ -36,7 +38,10 @@ function About() {
       const r = await fetch(`https://api.github.com/users/${site.githubUser}/repos?sort=updated&per_page=12`);
       if (!r.ok) throw new Error("github");
       const list = (await r.json()) as Repo[];
-      return list.filter((x) => !x.fork).slice(0, 6);
+      return list
+        .filter((x) => !x.fork)
+        .slice(0, 6)
+        .map((x) => ({ ...x, ...(site.repoOverrides[x.name] ?? {}) }));
     },
     staleTime: 1000 * 60 * 10,
     retry: 1,
@@ -49,13 +54,14 @@ function About() {
         <Blobs />
         <FloatingEmoji emoji="💜" className="right-[10%] top-20" />
         <FloatingEmoji emoji="⚙️" className="bottom-6 left-[8%]" delay={1.2} />
-        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[auto_1fr]">
-          <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 120 }} className="mx-auto">
-            <div className="animate-blob bg-hero-gradient shadow-glow grid h-56 w-56 place-items-center p-2 md:h-72 md:w-72">
-              <div className="animate-blob grid h-full w-full place-items-center bg-card text-7xl md:text-8xl">🧑‍💻</div>
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[auto_1fr] md:gap-20">
+          <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 120 }} className="relative mx-auto">
+            <div className="animate-blob bg-hero-gradient shadow-glow h-56 w-56 p-2 md:h-72 md:w-72">
+              <img src={portrait.url} alt={site.name} className="animate-blob h-full w-full bg-card object-cover object-top" />
             </div>
+            <img src={roundPic.url} alt={`${site.name} illustration`} className="shadow-soft absolute -bottom-4 -right-6 h-24 w-24 rounded-full border-4 border-card object-cover object-top md:h-28 md:w-28" />
           </motion.div>
-          <div className="text-center md:text-left">
+          <div className="relative z-10 text-center md:text-left">
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-semibold text-bubblegum">Hello, I'm</motion.p>
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gradient-animated text-5xl font-bold md:text-7xl">
               {site.name}
@@ -66,6 +72,23 @@ function About() {
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="mt-5 text-lg text-muted-foreground">
               {site.about.intro}
             </motion.p>
+            <ul className="mt-4 space-y-1 text-left text-muted-foreground">
+              {site.about.highlights.map((h) => (
+                <li key={h}>✨ {h}</li>
+              ))}
+            </ul>
+            <p className="mt-4 text-muted-foreground"><span className="font-semibold text-foreground">Objective:</span> {site.about.objective}</p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
+              <a href={site.resumeUrl} target="_blank" rel="noreferrer" className="bg-hero-gradient shadow-glow inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-primary-foreground transition hover:-translate-y-1">
+                <Download className="h-5 w-5" /> Resume
+              </a>
+              {site.socials.map((so) => (
+                <a key={so.label} href={so.href} target="_blank" rel="noreferrer" className="rounded-full bg-secondary px-5 py-3 font-medium text-primary transition hover:-translate-y-1">
+                  {so.label}
+                </a>
+              ))}
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">{site.instagramJoke}</p>
           </div>
         </div>
       </section>
@@ -83,7 +106,7 @@ function About() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, type: "spring", stiffness: 260 }}
-                whileHover={{ scale: 1.12, rotate: i % 2 ? 4 : -4 }}
+                whileHover={{ scale: 1.12, rotate: i % 2 ? 4 : -4, transition: { duration: 0.12 } }}
                 className={`${chipColors[i % chipColors.length]} rounded-full px-5 py-2.5 text-lg font-semibold text-primary-foreground shadow-soft`}
               >
                 {s}
