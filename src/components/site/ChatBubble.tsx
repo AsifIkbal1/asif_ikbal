@@ -64,7 +64,7 @@ export function ChatBubble() {
       visitCount = 0;
     }
 
-    const currentGreeting = ROTATING_MESSAGES[visitCount];
+    const currentGreeting = ROTATING_MESSAGES[visitCount] ?? "";
     setMessages([{ role: "assistant", content: currentGreeting }]);
     setPreviewMsg(currentGreeting);
 

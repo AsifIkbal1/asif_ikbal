@@ -15,6 +15,13 @@
       "when": 1794286320638,
       "tag": "0001_create_payment_requests",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794409145902,
+      "tag": "0002_allow_public_payment_request_insert",
+      "breakpoints": true
     }
   ]
 }

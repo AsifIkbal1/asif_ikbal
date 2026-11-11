@@ -17,7 +17,7 @@ export const submitOrder = createServerFn({ method: "POST" })
     }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    let orderId = crypto.randomUUID();
+    let orderId: string = crypto.randomUUID();
 
     try {
       const { data: order, error } = await supabaseAdmin
