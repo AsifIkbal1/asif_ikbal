@@ -9,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { submitOrder } from "@/lib/order.functions";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { playOrderSuccessSound } from "@/lib/sound";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 const TIME_SLOTS = Array.from({ length: 25 }, (_, i) => {
@@ -104,7 +103,6 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
         },
       });
       setStatus("done");
-      playOrderSuccessSound();
       const fire = (x: number) =>
         confetti({ particleCount: 120, spread: 80, origin: { x, y: 0.6 }, zIndex: 9999, colors: ["#a855f7", "#ec4899", "#f97316", "#3b82f6", "#facc15"] });
       fire(0.25);
@@ -325,11 +323,6 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
               )}
               <motion.button
                 type="submit"
-                onClick={() => {
-                  if (step === TOTAL - 1) {
-                    playOrderSuccessSound();
-                  }
-                }}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 className="bg-gradient-animated shadow-glow inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-primary-foreground"
