@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { submitOrder } from "@/lib/order.functions";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { playOrderSuccessSound } from "@/lib/sound";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 const TIME_SLOTS = Array.from({ length: 25 }, (_, i) => {
@@ -103,10 +104,7 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
         },
       });
       setStatus("done");
-      try {
-        const audio = new Audio("/order-success.mp3");
-        audio.play().catch(() => {});
-      } catch {}
+      playOrderSuccessSound();
       const fire = (x: number) =>
         confetti({ particleCount: 120, spread: 80, origin: { x, y: 0.6 }, zIndex: 9999, colors: ["#a855f7", "#ec4899", "#f97316", "#3b82f6", "#facc15"] });
       fire(0.25);

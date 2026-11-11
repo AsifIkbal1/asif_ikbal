@@ -14,6 +14,7 @@ import { OrderProvider } from "@/components/site/OrderContext";
 import { Navbar, Footer } from "@/components/site/Layout";
 import { FloatingOrderButton } from "@/components/site/Bits";
 import { ChatBubble } from "@/components/site/ChatBubble";
+import { initAudioUnlock } from "@/lib/sound";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -125,6 +126,10 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    initAudioUnlock();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
