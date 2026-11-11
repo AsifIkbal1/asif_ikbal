@@ -17,28 +17,22 @@ export const submitOrder = createServerFn({ method: "POST" })
     }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    let orderId: string = crypto.randomUUID();
+    const orderId = crypto.randomUUID();
 
-    try {
-      const { data: order, error } = await supabaseAdmin
-        .from("orders")
-        .insert({
-          name: data.name,
-          whatsapp_number: data.whatsappNumber,
-          consultation_datetime: data.consultationDatetime,
-          additional_info: data.additionalInfo || null,
-          pdf_url: data.pdfPath,
-        })
-        .select("id, created_at")
-        .single();
+    const { error } = await supabaseAdmin
+      .from("orders")
+      .insert({
+        id: orderId,
+        name: data.name,
+        whatsapp_number: data.whatsappNumber,
+        consultation_datetime: data.consultationDatetime,
+        additional_info: data.additionalInfo || null,
+        pdf_url: data.pdfPath,
+      });
 
-      if (order?.id) {
-        orderId = order.id;
-      } else if (error) {
-        console.warn("Direct order insert warned, but proceeding:", error.message);
-      }
-    } catch (dbErr) {
-      console.warn("DB insert fallback:", dbErr);
+    if (error) {
+      console.error("Order insert error:", error);
+      throw new Error("Could not submit your order. Please try again.");
     }
 
     const webhook = process.env['N8N_WEBHOOK_URL'];

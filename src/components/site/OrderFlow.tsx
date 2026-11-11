@@ -103,6 +103,10 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
         },
       });
       setStatus("done");
+      try {
+        const audio = new Audio("/order-success.mp3");
+        audio.play().catch(() => {});
+      } catch {}
       const fire = (x: number) =>
         confetti({ particleCount: 120, spread: 80, origin: { x, y: 0.6 }, zIndex: 9999, colors: ["#a855f7", "#ec4899", "#f97316", "#3b82f6", "#facc15"] });
       fire(0.25);
@@ -321,12 +325,7 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
                   <ArrowLeft className="h-5 w-5" /> Back
                 </button>
               )}
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className="bg-gradient-animated shadow-glow inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-primary-foreground"
-              >
+              <motion.button type="submit" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="bg-gradient-animated shadow-glow inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-primary-foreground">
                 {step === TOTAL - 1 ? (info.trim() ? "Submit order" : "Skip & submit") : "Continue"}
                 {step < TOTAL - 1 && <ArrowRight className="h-5 w-5" />}
               </motion.button>

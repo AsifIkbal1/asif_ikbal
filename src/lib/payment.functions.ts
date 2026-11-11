@@ -14,18 +14,22 @@ export const submitPayment = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => paymentSchema.parse(d))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: row, error } = await supabaseAdmin
+    const paymentId = crypto.randomUUID();
+    const createdAt = new Date().toISOString();
+
+    const { error } = await supabaseAdmin
       .from("payment_requests")
       .insert({
+        id: paymentId,
         method: data.method,
         name: data.name,
         whatsapp_number: data.whatsappNumber,
         transaction_id: data.transactionId,
-      })
-      .select("id, created_at")
-      .single();
-    if (error || !row) {
-      console.error("payment insert failed", error);
+        created_at: createdAt,
+      });
+
+    if (error) {
+      console.error("Payment insert error:", error);
       throw new Error("Could not send your request. Please try again.");
     }
 
@@ -37,17 +41,17 @@ export const submitPayment = createServerFn({ method: "POST" })
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             type: "payment",
-            id: row.id,
+            id: paymentId,
             method: data.method,
             name: data.name,
             whatsapp_number: data.whatsappNumber,
             transaction_id: data.transactionId,
-            created_at: row.created_at,
+            created_at: createdAt,
           }),
         });
       } catch (e) {
         console.error("webhook failed", e);
       }
     }
-    return { ok: true, id: row.id };
+    return { ok: true, id: paymentId };
   });

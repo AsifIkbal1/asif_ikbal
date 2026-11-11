@@ -1,88 +1,24 @@
-// Silent Chat Bubble with rotating greetings - Version 2.0 (Soundless)
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { MessageCircle, Send, X, Sparkles } from "lucide-react";
+import { MessageCircle, Send, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { askAssistant } from "@/lib/chat.functions";
+import { site } from "@/lib/site";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
-const ROTATING_MESSAGES = [
-  `আরে বসসস! আসসালামু আলাইকুম! 😎
-
-বস কি ওয়েবসাইট ঘুরতে আসছেন?
-ঘুরেন ঘুরেন, কোনো তাড়া নাই!
-সবকিছু ভালো করে দেখেন।
-
-আর শোনেন, ঘুরেফিরে ক্লান্ত হয়ে গেলে Kacchi Section থেকে এক প্লেট কাচ্চির দাওয়াত দিতে পারেন! 🍗
-
-100% Safe, Secure & Authentic!
-কাচ্চি ভার্চুয়াল, কিন্তু সার্ভিস একদম রিয়েল! 😂`,
-
-  `বস, শুধু ওয়েবসাইট দেখে চলে গেলে হবে? 🥲
-
-মনের মধ্যে কোনো আইডিয়া থাকলে বলেন।
-Website, Software, SaaS, AI Automation—সবকিছুর ব্যবস্থা আছে।
-
-আপনি আইডিয়া দেন, বাকিটা আমার দায়িত্ব।
-
-বাজেট নিয়ে টেনশন নাই, আগে চা খাই, পরে হিসাব করি! ☕😂`,
-
-  `এই যে বস! 👀
-
-ওয়েবসাইটে ঢুকছেন, ভালো কথা।
-কিন্তু চুপচাপ ঘুরে বেড়াচ্ছেন কেন?
-
-কোনো Project লাগবে?
-নাকি শুধু আমার ডিজাইন দেখে প্রেমে পড়ে গেছেন? 😂
-
-যাই হোক, Welcome Boss!
-আপনার আইডিয়াকে বাস্তবে রূপ দিতে আমরা প্রস্তুত।`,
-];
-
+const WELCOME: Msg = {
+  role: "assistant",
+  content: "Hi there! 👋 I'm Asif's AI assistant. Ask me anything about his services — software, websites, SaaS, n8n or automation!",
+};
 const CHIPS = ["What services do you offer?", "How does ordering work?", "I need an automation"];
 
 export function ChatBubble() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const [messages, setMessages] = useState<Msg[]>([WELCOME]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [previewMsg, setPreviewMsg] = useState<string | null>(null);
-  const [showPreview, setShowPreview] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Rotating welcome messages based on reload counter
-    let visitCount = 0;
-    try {
-      const stored = sessionStorage.getItem("asif_chat_visit_index");
-      if (stored !== null) {
-        visitCount = (parseInt(stored, 10) + 1) % ROTATING_MESSAGES.length;
-      }
-      sessionStorage.setItem("asif_chat_visit_index", visitCount.toString());
-    } catch {
-      visitCount = 0;
-    }
-
-    const currentGreeting = ROTATING_MESSAGES[visitCount] ?? "";
-    setMessages([{ role: "assistant", content: currentGreeting }]);
-    setPreviewMsg(currentGreeting);
-
-    // Trigger popup after short delay
-    const timer = setTimeout(() => {
-      setShowPreview(true);
-    }, 1500);
-
-    // Auto close popup message after 3 seconds of showing (1.5s delay + 3s = 4.5s)
-    const closeTimer = setTimeout(() => {
-      setShowPreview(false);
-    }, 4500);
-
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(closeTimer);
-    };
-  }, []);
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
@@ -96,7 +32,7 @@ export function ChatBubble() {
     setInput("");
     setLoading(true);
     try {
-      const history = next.slice(-20);
+      const history = next.filter((m) => m !== WELCOME).slice(-20);
       const res = await askAssistant({ data: { messages: history } });
       setMessages((m) => [...m, { role: "assistant", content: res.reply }]);
     } catch {
@@ -108,56 +44,6 @@ export function ChatBubble() {
 
   return (
     <>
-      {/* Floating Preview Popup with speech tail */}
-      <AnimatePresence>
-        {showPreview && !open && previewMsg && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 15, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed bottom-24 right-5 z-50 max-w-[22rem] sm:max-w-sm rounded-3xl border border-primary/20 bg-card/95 p-4 shadow-glow backdrop-blur-md"
-          >
-            <div className="flex items-start justify-between gap-2 border-b border-border/50 pb-2">
-              <div className="flex items-center gap-2">
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-primary/10 text-base">🤖</span>
-                <span className="text-sm font-bold text-foreground">Asif's AI Assistant</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowPreview(false)}
-                className="rounded-full p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-            <div
-              onClick={() => {
-                setShowPreview(false);
-                setOpen(true);
-              }}
-              className="mt-2.5 cursor-pointer text-sm font-medium leading-relaxed text-foreground/90 transition hover:opacity-80 whitespace-pre-line"
-            >
-              {previewMsg}
-            </div>
-            <div className="mt-3 flex items-center justify-between pt-1">
-              <span className="text-xs text-muted-foreground">Click to reply</span>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowPreview(false);
-                  setOpen(true);
-                }}
-                className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
-              >
-                <Sparkles className="h-3 w-3" /> Chat now
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Main Chat Drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -202,8 +88,8 @@ export function ChatBubble() {
                   <div
                     className={
                       m.role === "user"
-                        ? "max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-primary-foreground font-medium"
-                        : "max-w-[88%] whitespace-pre-line rounded-2xl rounded-bl-md bg-card px-4 py-2.5 shadow-sm text-foreground/90 font-medium text-sm leading-relaxed"
+                        ? "max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-primary-foreground"
+                        : "max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-bl-md bg-card px-4 py-2.5 shadow-sm"
                     }
                   >
                     {m.content}
@@ -216,7 +102,7 @@ export function ChatBubble() {
                     <button
                       key={c}
                       onClick={() => send(c)}
-                      className="rounded-full border border-primary/30 bg-card px-3 py-1.5 text-xs font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground"
+                      className="rounded-full border border-primary/30 bg-card px-3 py-1.5 text-sm text-primary transition hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground"
                     >
                       {c}
                     </button>
@@ -249,7 +135,7 @@ export function ChatBubble() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your message…"
                 maxLength={2000}
-                className="flex-1 rounded-full bg-secondary px-4 py-2.5 outline-none focus:ring-2 focus:ring-ring text-sm"
+                className="flex-1 rounded-full bg-secondary px-4 py-2.5 outline-none focus:ring-2 focus:ring-ring"
               />
               <button
                 type="submit"
@@ -264,12 +150,8 @@ export function ChatBubble() {
         )}
       </AnimatePresence>
 
-      {/* Floating Chat Trigger Button */}
       <motion.button
-        onClick={() => {
-          setShowPreview(false);
-          setOpen((o) => !o);
-        }}
+        onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close chat" : "Open chat"}
         animate={open ? { y: 0 } : { y: [0, -8, 0] }}
         transition={{ duration: 1.8, repeat: open ? 0 : Infinity, ease: "easeInOut" }}
