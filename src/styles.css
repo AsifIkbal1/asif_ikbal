@@ -186,7 +186,7 @@
   perspective: 1000px;
 }
 
-/* Phone input */
+/* App Stylesheet - Version 3.0 Production Build */
 .PhoneInput { gap: 0.75rem; }
 .PhoneInputCountry { padding: 0 0.75rem; border-radius: 1rem; background: var(--secondary); align-self: stretch; }
 .PhoneInputInput {
