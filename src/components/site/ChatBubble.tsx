@@ -1,3 +1,4 @@
+// Silent Chat Bubble with rotating greetings - Version 2.0 (Soundless)
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Send, X, Sparkles } from "lucide-react";
