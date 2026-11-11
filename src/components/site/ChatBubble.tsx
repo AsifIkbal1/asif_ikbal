@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Send, X, Sparkles } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { askAssistant } from "@/lib/chat.functions";
-import { playNotifySound } from "@/lib/sound";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -68,10 +67,9 @@ export function ChatBubble() {
     setMessages([{ role: "assistant", content: currentGreeting }]);
     setPreviewMsg(currentGreeting);
 
-    // Trigger popup after short delay with notification audio
+    // Trigger popup after short delay
     const timer = setTimeout(() => {
       setShowPreview(true);
-      playNotifySound();
     }, 1500);
 
     // Auto close popup message after 3 seconds of showing (1.5s delay + 3s = 4.5s)
