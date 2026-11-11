@@ -19,14 +19,7 @@ export function Reveal({ children, delay = 0, className, ...rest }: { children: 
 }
 
 export function Blobs() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute -top-24 left-0 right-0 -bottom-24 -z-10 overflow-visible">
-      <div className="animate-blob absolute -left-24 -top-32 h-[32rem] w-[32rem] bg-grape/30 blur-3xl" />
-      <div className="animate-blob absolute -right-20 -top-10 h-[30rem] w-[30rem] bg-bubblegum/25 blur-3xl [animation-delay:-4s]" />
-      <div className="animate-blob absolute bottom-0 left-1/3 h-80 w-80 bg-tangerine/25 blur-3xl [animation-delay:-8s]" />
-      <div className="animate-blob absolute bottom-10 right-1/4 h-72 w-72 bg-sky/25 blur-3xl [animation-delay:-2s]" />
-    </div>
-  );
+  return null;
 }
 
 export function FloatingEmoji({ emoji, className, delay = 0 }: { emoji: string; className?: string; delay?: number }) {

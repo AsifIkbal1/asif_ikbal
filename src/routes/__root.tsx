@@ -132,10 +132,10 @@ function RootComponent() {
       <OrderProvider>
         <div className="relative min-h-screen">
           <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-            <div className="animate-blob absolute -left-32 -top-32 h-[42rem] w-[42rem] bg-grape/35 blur-3xl" />
-            <div className="animate-blob absolute -right-32 -top-20 h-[40rem] w-[40rem] bg-bubblegum/30 blur-3xl [animation-delay:-4s]" />
-            <div className="animate-blob absolute top-1/4 left-1/3 h-[30rem] w-[30rem] bg-tangerine/20 blur-3xl [animation-delay:-8s]" />
-            <div className="animate-blob absolute bottom-10 right-1/4 h-80 w-80 bg-sky/20 blur-3xl [animation-delay:-2s]" />
+            <div className="animate-blob absolute -left-20 -top-20 h-[36rem] w-[36rem] rounded-full bg-grape/30 blur-[90px] transform-gpu" />
+            <div className="animate-blob absolute -right-20 -top-16 h-[34rem] w-[34rem] rounded-full bg-bubblegum/25 blur-[90px] [animation-delay:-5s] transform-gpu" />
+            <div className="animate-blob absolute top-1/3 left-1/3 h-[26rem] w-[26rem] rounded-full bg-tangerine/20 blur-[80px] [animation-delay:-10s] transform-gpu" />
+            <div className="animate-blob absolute bottom-10 right-1/4 h-72 w-72 rounded-full bg-sky/20 blur-[80px] [animation-delay:-3s] transform-gpu" />
           </div>
           <Navbar />
           <main>

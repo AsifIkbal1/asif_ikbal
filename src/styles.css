@@ -147,6 +147,9 @@
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   border: 1px solid oklch(1 0 0 / 0.7);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 }
 @utility text-gradient-animated {
   background-image: var(--gradient-hero);
@@ -154,12 +157,14 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradient-pan 6s ease infinite;
+  animation: gradient-pan 8s linear infinite;
+  transform: translateZ(0);
 }
 @utility bg-gradient-animated {
   background-image: var(--gradient-cta);
   background-size: 200% 100%;
-  animation: gradient-pan 4s ease infinite;
+  animation: gradient-pan 6s linear infinite;
+  transform: translateZ(0);
 }
 
 @keyframes gradient-pan {
@@ -167,11 +172,19 @@
   50% { background-position: 100% 50%; }
 }
 @keyframes blob {
-  0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; transform: translate(0, 0) scale(1); }
-  33% { border-radius: 70% 30% 46% 54% / 30% 39% 61% 70%; transform: translate(30px, -40px) scale(1.08); }
-  66% { border-radius: 30% 70% 70% 30% / 53% 64% 36% 47%; transform: translate(-20px, 20px) scale(0.95); }
+  0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; transform: translate3d(0, 0, 0) scale(1); }
+  33% { border-radius: 70% 30% 46% 54% / 30% 39% 61% 70%; transform: translate3d(24px, -28px, 0) scale(1.04); }
+  66% { border-radius: 30% 70% 70% 30% / 53% 64% 36% 47%; transform: translate3d(-18px, 16px, 0) scale(0.96); }
 }
-.animate-blob { animation: blob 14s ease-in-out infinite; }
+.animate-blob {
+  animation: blob 16s ease-in-out infinite;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform, border-radius;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+}
 
 /* Phone input */
 .PhoneInput { gap: 0.75rem; }
