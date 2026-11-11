@@ -17,20 +17,33 @@ export const submitPayment = createServerFn({ method: "POST" })
     const paymentId = crypto.randomUUID();
     const createdAt = new Date().toISOString();
 
-    const { error } = await supabaseAdmin
-      .from("payment_requests")
-      .insert({
-        id: paymentId,
-        method: data.method,
-        name: data.name,
-        whatsapp_number: data.whatsappNumber,
-        transaction_id: data.transactionId,
-        created_at: createdAt,
-      });
+    const row = {
+      id: paymentId,
+      method: data.method,
+      name: data.name,
+      whatsapp_number: data.whatsappNumber,
+      transaction_id: data.transactionId,
+      created_at: createdAt,
+    };
+
+    let { error } = await supabaseAdmin.from("payment_requests").insert(row);
+
+    // Fallback: if the server's configured key is missing/invalid on the host,
+    // retry with the project's public key — the table allows public inserts but no reads.
+    if (error) {
+      console.error("Payment insert error (admin client):", error);
+      const { createClient } = await import("@supabase/supabase-js");
+      const publicClient = createClient(
+        "https://mfiouiohfmaiartoynfm.supabase.co",
+        "sb_publishable_47dRWgms8ySWGxThCejriw_50jI9vfO",
+        { auth: { persistSession: false, autoRefreshToken: false } },
+      );
+      ({ error } = await publicClient.from("payment_requests").insert(row));
+    }
 
     if (error) {
       console.error("Payment insert error:", error);
-      throw new Error("Could not send your request. Please try again.");
+      throw new Error(`Could not send your request. Please try again. (ref: ${error.code ?? "unknown"})`);
     }
 
     const webhook = process.env["N8N_WEBHOOK_URL"];
