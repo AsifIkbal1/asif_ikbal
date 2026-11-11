@@ -1,86 +1,107 @@
-// Embedded Base64 Audio to guarantee immediate zero-network, zero-cache playback
 export const NOTIFY_AUDIO_DATA = "/bubble-notify.mp3";
 export const SUCCESS_AUDIO_DATA = "/order-success.mp3";
 
-let notifyAudioEl: HTMLAudioElement | null = null;
-let successAudioEl: HTMLAudioElement | null = null;
-let unlocked = false;
+let audioCtx: AudioContext | null = null;
+let notifyBuffer: AudioBuffer | null = null;
+let isAudioContextLoading = false;
 
-function getNotifyAudio(): HTMLAudioElement {
-  if (!notifyAudioEl && typeof window !== "undefined") {
-    notifyAudioEl = new Audio("/bubble-notify.mp3");
-    notifyAudioEl.volume = 1;
-    notifyAudioEl.preload = "auto";
+function getContext(): AudioContext | null {
+  if (typeof window === "undefined") return null;
+  const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+  if (!AudioContextClass) return null;
+  if (!audioCtx) {
+    audioCtx = new AudioContextClass();
   }
-  return notifyAudioEl!;
+  return audioCtx;
 }
 
-function getSuccessAudio(): HTMLAudioElement {
-  if (!successAudioEl && typeof window !== "undefined") {
-    successAudioEl = new Audio("/order-success.mp3");
-    successAudioEl.volume = 1;
-    successAudioEl.preload = "auto";
+// Pre-fetch and decode the notification MP3 as an AudioBuffer
+async function loadNotifyBuffer(): Promise<AudioBuffer | null> {
+  if (notifyBuffer) return notifyBuffer;
+  if (isAudioContextLoading) return null;
+  isAudioContextLoading = true;
+  try {
+    const ctx = getContext();
+    if (!ctx) return null;
+    const res = await fetch("/bubble-notify.mp3");
+    const arrayBuf = await res.arrayBuffer();
+    notifyBuffer = await ctx.decodeAudioData(arrayBuf);
+    return notifyBuffer;
+  } catch (e) {
+    return null;
+  } finally {
+    isAudioContextLoading = false;
   }
-  return successAudioEl!;
+}
+
+// Background sound via Web Audio API synth (Zero-click guaranteed fallback chime)
+function playSyntheticPop(ctx: AudioContext) {
+  try {
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    // Bubble pop frequency sweep
+    osc.frequency.setValueAtTime(420, now);
+    osc.frequency.exponentialRampToValueAtTime(840, now + 0.08);
+
+    gain.gain.setValueAtTime(0.8, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.18);
+  } catch {}
 }
 
 export function initAudioUnlock() {
-  if (typeof window === "undefined" || unlocked) return;
-
-  const unlock = () => {
-    unlocked = true;
-    try {
-      const a = getNotifyAudio();
-      a.load();
-      const b = getSuccessAudio();
-      b.load();
-    } catch {}
-    window.removeEventListener("pointerdown", unlock);
-    window.removeEventListener("touchstart", unlock);
-    window.removeEventListener("keydown", unlock);
-    window.removeEventListener("click", unlock);
-  };
-
-  window.addEventListener("pointerdown", unlock, { passive: true });
-  window.addEventListener("touchstart", unlock, { passive: true });
-  window.addEventListener("keydown", unlock, { passive: true });
-  window.addEventListener("click", unlock, { passive: true });
+  if (typeof window === "undefined") return;
+  loadNotifyBuffer().catch(() => {});
 }
 
 export function playNotifySound() {
+  // Strategy 1: HTML5 Audio Direct Play (Works if browser allows autoplay on domain)
   try {
-    const a = getNotifyAudio();
-    a.currentTime = 0;
-    const res = a.play();
-    if (res && typeof res.catch === "function") {
-      res.catch((e) => {
-        console.warn("Autoplay audio blocked by browser policy, waiting for first click:", e);
-        const retry = () => {
-          a.currentTime = 0;
-          a.play().catch(() => {});
-          window.removeEventListener("click", retry);
-          window.removeEventListener("touchstart", retry);
-        };
-        window.addEventListener("click", retry, { once: true, passive: true });
-        window.addEventListener("touchstart", retry, { once: true, passive: true });
+    const a = new Audio("/bubble-notify.mp3");
+    a.volume = 1;
+    const p = a.play();
+    if (p && typeof p.then === "function") {
+      p.then(() => {
+        // Success with regular audio
+        return;
+      }).catch(async () => {
+        // Strategy 2: Web Audio API Buffer playback
+        const ctx = getContext();
+        if (ctx) {
+          if (ctx.state === "suspended") {
+            await ctx.resume().catch(() => {});
+          }
+          const buf = await loadNotifyBuffer();
+          if (buf && ctx.state === "running") {
+            const src = ctx.createBufferSource();
+            src.buffer = buf;
+            src.connect(ctx.destination);
+            src.start(0);
+          } else {
+            // Strategy 3: Synthetic audio pop
+            playSyntheticPop(ctx);
+          }
+        }
       });
     }
   } catch (err) {
-    console.error("playNotifySound error:", err);
+    const ctx = getContext();
+    if (ctx) playSyntheticPop(ctx);
   }
 }
 
 export function playOrderSuccessSound() {
   try {
-    const b = getSuccessAudio();
-    b.currentTime = 0;
-    const res = b.play();
-    if (res && typeof res.catch === "function") {
-      res.catch((e) => {
-        console.warn("Order success audio play blocked:", e);
-      });
-    }
-  } catch (err) {
-    console.error("playOrderSuccessSound error:", err);
-  }
+    const audio = new Audio("/order-success.mp3");
+    audio.volume = 1;
+    audio.play().catch(() => {});
+  } catch {}
 }
