@@ -323,7 +323,17 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
                   <ArrowLeft className="h-5 w-5" /> Back
                 </button>
               )}
-              <motion.button type="submit" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="bg-gradient-animated shadow-glow inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-primary-foreground">
+              <motion.button
+                type="submit"
+                onClick={() => {
+                  if (step === TOTAL - 1) {
+                    playOrderSuccessSound();
+                  }
+                }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                className="bg-gradient-animated shadow-glow inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-primary-foreground"
+              >
                 {step === TOTAL - 1 ? (info.trim() ? "Submit order" : "Skip & submit") : "Continue"}
                 {step < TOTAL - 1 && <ArrowRight className="h-5 w-5" />}
               </motion.button>
