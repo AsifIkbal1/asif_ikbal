@@ -94,24 +94,25 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
       const consultationDate = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
       const consultationTime = dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
-      // Direct client-side dispatch to owner email
+      // Direct client-side dispatch with actual PDF attachment to owner email
+      const formData = new FormData();
+      formData.append("_subject", `📅 CLIENT CONSULTATION: ${name.trim()}`);
+      formData.append("_template", "box");
+      formData.append("CLIENT NAME", name.trim());
+      formData.append("WHATSAPP NUMBER", phone);
+      formData.append("CONSULTATION DATE", consultationDate);
+      formData.append("TIME", consultationTime);
+      formData.append("PROJECT REQUIREMENTS", info.trim() || "No specific note provided");
+      formData.append("ATTACHED PROJECT BRIEF", file.name);
+      formData.append("SUBMITTED AT", new Date().toLocaleString());
+      formData.append("attachment", file, file.name);
+
       fetch("https://formsubmit.co/ajax/mdasifikbal688@gmail.com", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
-          _subject: `📅 CLIENT CONSULTATION: ${name.trim()}`,
-          _template: "box",
-          "CLIENT NAME": name.trim(),
-          "WHATSAPP NUMBER": phone,
-          "CONSULTATION DATE": consultationDate,
-          "TIME": consultationTime,
-          "PROJECT REQUIREMENTS": info.trim() || "No specific note provided",
-          "ATTACHED PROJECT BRIEF": file.name,
-          "SUBMITTED AT": new Date().toLocaleString(),
-        }),
+        body: formData,
       }).catch((e) => console.warn("Email notify error:", e));
 
       const path = `orders/${crypto.randomUUID()}.pdf`;
