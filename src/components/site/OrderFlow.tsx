@@ -94,25 +94,42 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
       const consultationDate = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
       const consultationTime = dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
-      // Direct client-side dispatch with actual PDF attachment to owner email
-      const formData = new FormData();
-      formData.append("_subject", `📅 CLIENT CONSULTATION: ${name.trim()}`);
-      formData.append("_template", "box");
-      formData.append("CLIENT NAME", name.trim());
-      formData.append("WHATSAPP NUMBER", phone);
-      formData.append("CONSULTATION DATE", consultationDate);
-      formData.append("TIME", consultationTime);
-      formData.append("PROJECT REQUIREMENTS", info.trim() || "No specific note provided");
-      formData.append("ATTACHED PROJECT BRIEF", file.name);
-      formData.append("SUBMITTED AT", new Date().toLocaleString());
-      formData.append("attachment", file, file.name);
+      // Upload PDF to get direct download link
+      let downloadUrl = "File submitted directly via client request";
+      try {
+        const upForm = new FormData();
+        upForm.append("file", file, file.name);
+        const upRes = await fetch("https://tmpfiles.org/api/v1/upload", {
+          method: "POST",
+          body: upForm,
+        });
+        const upJson = await upRes.json();
+        if (upJson?.data?.url) {
+          downloadUrl = upJson.data.url.replace("tmpfiles.org/", "tmpfiles.org/dl/");
+        }
+      } catch (e) {
+        console.warn("Direct file upload link skipped:", e);
+      }
 
+      // Direct client-side dispatch with direct PDF download link to owner email
       fetch("https://formsubmit.co/ajax/mdasifikbal688@gmail.com", {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: formData,
+        body: JSON.stringify({
+          _subject: `📅 CLIENT CONSULTATION: ${name.trim()}`,
+          _template: "box",
+          "CLIENT NAME": name.trim(),
+          "WHATSAPP NUMBER": phone,
+          "CONSULTATION DATE": consultationDate,
+          "TIME": consultationTime,
+          "PROJECT REQUIREMENTS": info.trim() || "No specific note provided",
+          "ATTACHED PROJECT BRIEF": file.name,
+          "📄 DOWNLOAD ATTACHED PDF": downloadUrl,
+          "SUBMITTED AT": new Date().toLocaleString(),
+        }),
       }).catch((e) => console.warn("Email notify error:", e));
 
       const path = `orders/${crypto.randomUUID()}.pdf`;
