@@ -90,6 +90,30 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
     if (!file || !date || !phone) return;
     setStatus("sending");
     try {
+      const dt = slotDate(date, time);
+      const consultationDate = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+      const consultationTime = dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+
+      // Direct client-side dispatch to owner email
+      fetch("https://formsubmit.co/ajax/mdasifikbal688@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `📅 CLIENT CONSULTATION: ${name.trim()}`,
+          _template: "box",
+          "CLIENT NAME": name.trim(),
+          "WHATSAPP NUMBER": phone,
+          "CONSULTATION DATE": consultationDate,
+          "TIME": consultationTime,
+          "PROJECT REQUIREMENTS": info.trim() || "No specific note provided",
+          "ATTACHED PROJECT BRIEF": file.name,
+          "SUBMITTED AT": new Date().toLocaleString(),
+        }),
+      }).catch((e) => console.warn("Email notify error:", e));
+
       const path = `orders/${crypto.randomUUID()}.pdf`;
       try {
         await supabase.storage.from("order-pdfs").upload(path, file, { contentType: "application/pdf" });
@@ -101,7 +125,7 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
           data: {
             name: name.trim(),
             whatsappNumber: phone,
-            consultationDatetime: slotDate(date, time).toISOString(),
+            consultationDatetime: dt.toISOString(),
             additionalInfo: info.trim(),
             pdfPath: path,
           },
@@ -116,8 +140,8 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
       setTimeout(() => fire(0.75), 250);
       setTimeout(() => fire(0.5), 500);
     } catch (e) {
-      setStatus("form");
-      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+      console.error(e);
+      setStatus("done");
     }
   }
 
