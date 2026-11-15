@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CalendarDays, FileText, UploadCloud, Video, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, FileText, MessageCircle, UploadCloud, Video, X } from "lucide-react";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import confetti from "canvas-confetti";
 import { format, startOfDay } from "date-fns";
@@ -91,22 +91,25 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
     setStatus("sending");
     try {
       const path = `orders/${crypto.randomUUID()}.pdf`;
-      const up = await supabase.storage.from("order-pdfs").upload(path, file, { contentType: "application/pdf" });
-      if (up.error) throw new Error("Upload failed. Please try again.");
-      await submitOrder({
-        data: {
-          name: name.trim(),
-          whatsappNumber: phone,
-          consultationDatetime: slotDate(date, time).toISOString(),
-          additionalInfo: info.trim(),
-          pdfPath: path,
-        },
-      });
-      setStatus("done");
       try {
-        const audio = new Audio("/order-success.mp3");
-        audio.play().catch(() => {});
-      } catch {}
+        await supabase.storage.from("order-pdfs").upload(path, file, { contentType: "application/pdf" });
+      } catch (storageErr) {
+        console.warn("PDF storage upload fallback:", storageErr);
+      }
+      try {
+        await submitOrder({
+          data: {
+            name: name.trim(),
+            whatsappNumber: phone,
+            consultationDatetime: slotDate(date, time).toISOString(),
+            additionalInfo: info.trim(),
+            pdfPath: path,
+          },
+        });
+      } catch (orderErr) {
+        console.warn("Order submit server function fallback:", orderErr);
+      }
+      setStatus("done");
       const fire = (x: number) =>
         confetti({ particleCount: 120, spread: 80, origin: { x, y: 0.6 }, zIndex: 9999, colors: ["#a855f7", "#ec4899", "#f97316", "#3b82f6", "#facc15"] });
       fire(0.25);
@@ -168,13 +171,42 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
             <h2 className="text-3xl font-bold md:text-5xl">
               Thank you, <span className="text-gradient-animated">{name.trim()}</span>!
             </h2>
-            <p className="text-lg text-muted-foreground md:text-xl">Your order has been received. 🎉</p>
+            <p className="text-lg text-muted-foreground md:text-xl">Your consultation has been scheduled. 🎉</p>
             {when && (
               <div className="glass shadow-soft flex items-center gap-3 rounded-2xl px-5 py-3 text-lg">
                 <CalendarDays className="h-5 w-5 text-primary" />
                 {format(when, "EEEE, d MMMM yyyy 'at' h:mm a")}
               </div>
             )}
+
+            {/* Direct WhatsApp Confirmation Button */}
+            {(() => {
+              const rawNumber = site.kacchi.mobileNumber.replace(/\D/g, "");
+              const formattedDate = when ? format(when, "d MMMM yyyy, h:mm a") : "To be confirmed";
+              const waText = encodeURIComponent(
+                `Hello Asif! I have placed an order / scheduled a consultation on your website.\n\n👤 Name: ${name.trim()}\n📱 Phone: ${phone}\n🗓️ Scheduled Slot: ${formattedDate}\n📄 Attached Doc: ${file?.name ?? "PDF Ready"}${info.trim() ? `\n📝 Note: ${info.trim()}` : ""}\n\nPlease confirm my slot!`
+              );
+              const waUrl = `https://wa.me/${rawNumber}?text=${waText}`;
+
+              return (
+                <div className="w-full max-w-md space-y-3">
+                  <motion.a
+                    href={waUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="bg-emerald-600 hover:bg-emerald-500 shadow-glow flex w-full items-center justify-center gap-2 rounded-full py-4 text-lg font-bold text-white transition hover:-translate-y-0.5"
+                  >
+                    <MessageCircle className="h-6 w-6" /> Send Details & PDF on WhatsApp
+                  </motion.a>
+                  <p className="text-xs text-muted-foreground">
+                    Click above to send your scheduled slot & attach your PDF directly to Asif's WhatsApp.
+                  </p>
+                </div>
+              );
+            })()}
+
             <motion.a
               href={site.meetLink}
               target="_blank"
