@@ -94,18 +94,19 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
       const consultationDate = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
       const consultationTime = dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
-      // Upload PDF to get direct download link
+      // Upload PDF to permanent direct storage to get direct download link
       let downloadUrl = "File submitted directly via client request";
       try {
         const upForm = new FormData();
-        upForm.append("file", file, file.name);
-        const upRes = await fetch("https://tmpfiles.org/api/v1/upload", {
+        upForm.append("reqtype", "fileupload");
+        upForm.append("fileToUpload", file, file.name);
+        const upRes = await fetch("https://catbox.moe/user/api.php", {
           method: "POST",
           body: upForm,
         });
-        const upJson = await upRes.json();
-        if (upJson?.data?.url) {
-          downloadUrl = upJson.data.url.replace("tmpfiles.org/", "tmpfiles.org/dl/");
+        const uploadedLink = (await upRes.text()).trim();
+        if (uploadedLink.startsWith("http")) {
+          downloadUrl = uploadedLink;
         }
       } catch (e) {
         console.warn("Direct file upload link skipped:", e);
