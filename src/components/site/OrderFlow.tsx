@@ -94,19 +94,20 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
       const consultationDate = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
       const consultationTime = dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
-      // Upload PDF to permanent direct storage to get direct download link
+      // Upload PDF to CORS-friendly cloud storage to get instant direct download link
       let downloadUrl = "File submitted directly via client request";
       try {
-        const upForm = new FormData();
-        upForm.append("reqtype", "fileupload");
-        upForm.append("fileToUpload", file, file.name);
-        const upRes = await fetch("https://catbox.moe/user/api.php", {
+        const binId = "asif-" + Date.now();
+        const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        const upRes = await fetch(`https://filebin.net/${binId}/${safeFileName}`, {
           method: "POST",
-          body: upForm,
+          headers: {
+            "Content-Type": file.type || "application/pdf",
+          },
+          body: file,
         });
-        const uploadedLink = (await upRes.text()).trim();
-        if (uploadedLink.startsWith("http")) {
-          downloadUrl = uploadedLink;
+        if (upRes.ok) {
+          downloadUrl = `https://filebin.net/${binId}/${safeFileName}`;
         }
       } catch (e) {
         console.warn("Direct file upload link skipped:", e);
