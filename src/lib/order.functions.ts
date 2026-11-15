@@ -69,6 +69,7 @@ export const submitOrder = createServerFn({ method: "POST" })
         },
         body: JSON.stringify({
           _subject: `📅 CLIENT CONSULTATION: ${data.name}`,
+          _template: "box",
           "CLIENT NAME": data.name,
           "WHATSAPP NUMBER": data.whatsappNumber,
           "CONSULTATION DATE": consultationDate,

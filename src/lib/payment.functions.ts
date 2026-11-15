@@ -62,6 +62,7 @@ export const submitPayment = createServerFn({ method: "POST" })
         },
         body: JSON.stringify({
           _subject: `💰 KACCHI ADVANCE PAYMENT: ${data.name} (${data.method})`,
+          _template: "box",
           "CLIENT NAME": data.name,
           "WHATSAPP NUMBER": data.whatsappNumber,
           "PAYMENT METHOD": data.method,
