@@ -57,6 +57,8 @@ export const submitPayment = createServerFn({ method: "POST" })
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Referer: "https://asif-ikbal-ochre.vercel.app/",
+          Origin: "https://asif-ikbal-ochre.vercel.app",
         },
         body: JSON.stringify({
           _subject: `💰 New Kacchi Advance Payment: ${data.name} (${data.method})`,

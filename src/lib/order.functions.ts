@@ -59,6 +59,8 @@ export const submitOrder = createServerFn({ method: "POST" })
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Referer: "https://asif-ikbal-ochre.vercel.app/",
+          Origin: "https://asif-ikbal-ochre.vercel.app",
         },
         body: JSON.stringify({
           _subject: `📅 New Order Consultation Booked: ${data.name}`,
