@@ -94,23 +94,34 @@ export function OrderFlow({ onClose }: { onClose: () => void }) {
       const consultationDate = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
       const consultationTime = dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
-      // Upload PDF to CORS-friendly cloud storage to get instant direct download link
+      // Helper: convert file to Base64 for Google Drive
+      const fileBase64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const res = reader.result as string;
+          resolve(res.split(",")[1] ?? "");
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      // Direct upload to owner's Google Drive Folder via Apps Script
       let downloadUrl = "File submitted directly via client request";
       try {
-        const binId = "asif-" + Date.now();
-        const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-        const upRes = await fetch(`https://filebin.net/${binId}/${safeFileName}`, {
+        const gdriveRes = await fetch("https://script.google.com/macros/s/AKfycbwHGJ-V0f8bRHK_yqbXBg877KqiAP2OHtDA9rAVmHp7yk9Q3g4nt3TBo0LDDncpnJNh/exec", {
           method: "POST",
-          headers: {
-            "Content-Type": file.type || "application/pdf",
-          },
-          body: file,
+          body: JSON.stringify({
+            fileName: `${name.trim()}_${file.name}`,
+            mimeType: file.type || "application/pdf",
+            fileBase64: fileBase64,
+          }),
         });
-        if (upRes.ok) {
-          downloadUrl = `https://filebin.net/${binId}/${safeFileName}`;
+        const gdriveJson = await gdriveRes.json();
+        if (gdriveJson?.status === "success" && gdriveJson?.url) {
+          downloadUrl = gdriveJson.url;
         }
-      } catch (e) {
-        console.warn("Direct file upload link skipped:", e);
+      } catch (gErr) {
+        console.warn("Google Drive upload fallback:", gErr);
       }
 
       // Direct client-side dispatch with direct PDF download link to owner email
