@@ -52,8 +52,13 @@ export const submitOrder = createServerFn({ method: "POST" })
       console.warn("Database storage skipped (Lovable/Supabase project unreachable). Order proceeding smoothly.", error);
     }
 
-    // Free email notification to owner
+    // Free structured email notification to owner matching client dashboard template
     try {
+      const dt = new Date(data.consultationDatetime);
+      const consultationDate = dt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+      const consultationTime = dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+      const fileName = data.pdfPath.split("/").pop() ?? "project-brief.pdf";
+
       await fetch("https://formsubmit.co/ajax/mdasifikbal688@gmail.com", {
         method: "POST",
         headers: {
@@ -63,13 +68,13 @@ export const submitOrder = createServerFn({ method: "POST" })
           Origin: "https://asif-ikbal-ochre.vercel.app",
         },
         body: JSON.stringify({
-          _subject: `📅 New Order Consultation Booked: ${data.name}`,
-          Name: data.name,
-          "WhatsApp Number": data.whatsappNumber,
-          "Consultation Date & Time": data.consultationDatetime,
-          "Additional Info": data.additionalInfo || "None",
-          "PDF Path": data.pdfPath,
-          "Submitted At": new Date().toISOString(),
+          _subject: `📅 CLIENT CONSULTATION: ${data.name}`,
+          "CLIENT NAME": data.name,
+          "WHATSAPP NUMBER": data.whatsappNumber,
+          "CONSULTATION DATE": consultationDate,
+          "TIME": consultationTime,
+          "PROJECT REQUIREMENTS": data.additionalInfo || "No specific note provided",
+          "ATTACHED PROJECT BRIEF": fileName,
         }),
       });
     } catch (mailErr) {

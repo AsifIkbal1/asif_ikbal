@@ -50,7 +50,7 @@ export const submitPayment = createServerFn({ method: "POST" })
       console.warn("Database storage skipped (Lovable/Supabase project unreachable). Proceeding with submission.", error);
     }
 
-    // Free email notification to owner
+    // Free structured email notification to owner matching client dashboard template
     try {
       await fetch("https://formsubmit.co/ajax/mdasifikbal688@gmail.com", {
         method: "POST",
@@ -61,12 +61,12 @@ export const submitPayment = createServerFn({ method: "POST" })
           Origin: "https://asif-ikbal-ochre.vercel.app",
         },
         body: JSON.stringify({
-          _subject: `💰 New Kacchi Advance Payment: ${data.name} (${data.method})`,
-          Name: data.name,
-          "WhatsApp Number": data.whatsappNumber,
-          "Payment Method": data.method,
-          "Transaction ID": data.transactionId,
-          "Submitted At": createdAt,
+          _subject: `💰 KACCHI ADVANCE PAYMENT: ${data.name} (${data.method})`,
+          "CLIENT NAME": data.name,
+          "WHATSAPP NUMBER": data.whatsappNumber,
+          "PAYMENT METHOD": data.method,
+          "TRANSACTION ID": data.transactionId,
+          "PAYMENT PURPOSE": "50% Advance for Project Initiation",
         }),
       });
     } catch (mailErr) {
