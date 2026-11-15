@@ -205,11 +205,65 @@ function ManualPay({ method }: { method: (typeof PAYMENT_METHODS)[number] }) {
   }
 
   if (status === "done") {
+    const rawNumber = site.kacchi.mobileNumber.replace(/\D/g, "");
+    const waText = encodeURIComponent(
+      `Hi Asif! Payment complete হয়েছে।\n\nMethod: ${method}\nName: ${name}\nTransaction ID: ${txn}\n\nSurprise টা কী? 🎁`
+    );
+    const waUrl = `https://wa.me/${rawNumber}?text=${waText}`;
+
     return (
-      <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="py-8 text-center">
-        <div className="text-7xl">🍛</div>
-        <h2 className="mt-4 text-3xl font-bold">{site.kacchi.doneTitle}</h2>
-        <p className="mt-2 text-lg text-muted-foreground">{site.kacchi.doneText}</p>
+      <motion.div
+        initial={{ scale: 0.85, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        className="relative overflow-hidden rounded-[2rem] border border-primary/20 bg-gradient-to-b from-primary/10 via-background to-secondary/30 p-8 text-center shadow-soft"
+      >
+        <motion.div
+          animate={{ scale: [1, 1.25, 1], rotate: [0, -10, 10, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 1 }}
+          className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/15 text-5xl shadow-glow"
+        >
+          🎁
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="text-2xl font-bold tracking-tight text-foreground md:text-3xl"
+        >
+          Payment-এর জন্য অনেক ধন্যবাদ! 😊
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mx-auto mt-4 max-w-lg space-y-3 rounded-2xl bg-card/80 p-5 backdrop-blur-sm border border-border/60 shadow-sm"
+        >
+          <p className="text-base font-medium leading-relaxed text-foreground/90 md:text-lg">
+            Payment complete হলে WhatsApp-এ একটু জানিয়ে দিয়েন। আপনার জন্য কিন্তু একটা ছোট্ট surprise অপেক্ষা করছে! 🎁🤫
+          </p>
+          <p className="text-sm font-semibold italic text-primary md:text-base">
+            "কি surprise, সেটা এখনই বলা যাবে না! 🤭"
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45 }}
+          className="mt-6 flex flex-wrap items-center justify-center gap-3"
+        >
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-gradient-animated shadow-glow inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-primary-foreground transition hover:-translate-y-1 hover:shadow-lg"
+          >
+            <MessageCircle className="h-5 w-5" /> WhatsApp-এ জানান ও Surprise জানুন 💬
+          </a>
+        </motion.div>
       </motion.div>
     );
   }
