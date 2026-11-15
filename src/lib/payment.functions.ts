@@ -50,6 +50,27 @@ export const submitPayment = createServerFn({ method: "POST" })
       console.warn("Database storage skipped (Lovable/Supabase project unreachable). Proceeding with submission.", error);
     }
 
+    // Free email notification to owner
+    try {
+      await fetch("https://formsubmit.co/ajax/mdasifikbal688@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `💰 New Kacchi Advance Payment: ${data.name} (${data.method})`,
+          Name: data.name,
+          "WhatsApp Number": data.whatsappNumber,
+          "Payment Method": data.method,
+          "Transaction ID": data.transactionId,
+          "Submitted At": createdAt,
+        }),
+      });
+    } catch (mailErr) {
+      console.warn("Payment email dispatch skipped:", mailErr);
+    }
+
     const webhook = process.env["N8N_WEBHOOK_URL"];
     if (webhook) {
       try {

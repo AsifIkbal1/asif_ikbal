@@ -52,6 +52,28 @@ export const submitOrder = createServerFn({ method: "POST" })
       console.warn("Database storage skipped (Lovable/Supabase project unreachable). Order proceeding smoothly.", error);
     }
 
+    // Free email notification to owner
+    try {
+      await fetch("https://formsubmit.co/ajax/mdasifikbal688@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `📅 New Order Consultation Booked: ${data.name}`,
+          Name: data.name,
+          "WhatsApp Number": data.whatsappNumber,
+          "Consultation Date & Time": data.consultationDatetime,
+          "Additional Info": data.additionalInfo || "None",
+          "PDF Path": data.pdfPath,
+          "Submitted At": new Date().toISOString(),
+        }),
+      });
+    } catch (mailErr) {
+      console.warn("Order email dispatch skipped:", mailErr);
+    }
+
     const webhook = process.env['N8N_WEBHOOK_URL'];
     if (webhook) {
       try {
