@@ -9,6 +9,7 @@ import {
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import { OrderProvider } from "@/components/site/OrderContext";
 import { Navbar, Footer } from "@/components/site/Layout";
@@ -144,6 +145,7 @@ function RootComponent() {
           <Footer />
           <FloatingOrderButton />
           <ChatBubble />
+          <Analytics />
         </div>
       </OrderProvider>
     </QueryClientProvider>
