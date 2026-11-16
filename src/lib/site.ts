@@ -57,7 +57,7 @@ export const site = {
   about: {
     title: "AI, SaaS & Automation Specialist",
     intro:
-      "Dynamic Machine Learning & Automation professional with 2+ years of experience in AI, data science, machine learning, workflow automation and predictive analytics. I build AI-powered workflows, intelligent apps, chatbots, voice automation, forecasting models and process digitalization solutions.",
+      "Dynamic Machine Learning & Automation professional with 7+ years of experience in AI, data science, machine learning, workflow automation and predictive analytics. I build AI-powered workflows, intelligent apps, chatbots, voice automation, forecasting models and process digitalization solutions.",
     highlights: [
       "Guided 200+ students in Python, Machine Learning, data analysis and project development",
       "Built 550+ AI/ML projects across diverse applications",
