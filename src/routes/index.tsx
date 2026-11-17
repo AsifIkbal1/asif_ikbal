@@ -12,6 +12,7 @@ const reviews = [
     avatar: "/client-avatar.png",
     emoji: "🌸",
     tag: "Verified Client",
+    rating: 5.0,
     review: "কাজটি অসাধারণ হয়েছে! আমার প্রত্যাশার চেয়েও ভালো সার্ভিস পেয়েছি। খুবই আন্তরিক ও পেশাদারভাবে কাজটি সম্পন্ন করেছেন। অবশ্যই আবারও কাজ করব। highly recommended!",
     project: "OS Toolkit: A Linux-Based System Monitoring and Management Tool",
     category: "Service Feedback",
@@ -22,6 +23,7 @@ const reviews = [
     avatar: "/client-ritorica.png",
     emoji: "🏢",
     tag: "Verified Enterprise Client",
+    rating: 5.0,
     review: "Excellent work! The Bulk SMS platform developed for Ritorica exceeded our expectations. The system is professional, user-friendly, and works smoothly. Very satisfied with the quality and dedication. Highly recommended!",
     project: "Bulk SMS SaaS platform",
     category: "Enterprise Review",
@@ -32,10 +34,44 @@ const reviews = [
     avatar: "/client-alif.png",
     emoji: "🎧",
     tag: "Verified Client",
+    rating: 4.8,
     review: "অসাধারণ অভিজ্ঞতা! আমার iPhone-এর জন্য মিউজিক ডাউনলোড ও অফলাইনে শোনার অ্যাপটি ঠিক আমার চাহিদা অনুযায়ী তৈরি করে দিয়েছেন। কাজের মান, ডিজাইন এবং পারফরম্যান্স সবকিছুই চমৎকার। খুবই সন্তুষ্ট!",
     project: "MelodyGo – Your music on the go",
     category: "iOS App Feedback",
     glow: "bg-amber-500/10",
+  },
+  {
+    name: "Tanvir Hasan",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    emoji: "⚡",
+    tag: "Verified Client",
+    rating: 4.5,
+    review: "n8n দিয়ে আমাদের ই-কমার্স স্টোরের অটোমেশন সেটআপ করে দেওয়ার পর অর্ডারের প্রসেসিং টাইম প্রায় ৮০% কমে গেছে! সময়মতো কাজ বুঝিয়ে দিয়েছেন এবং যেকোনো প্রয়োজনে দ্রুত রেসপন্স করেছেন।",
+    project: "E-Commerce n8n Order & WhatsApp Automation",
+    category: "Workflow Automation",
+    glow: "bg-purple-500/10",
+  },
+  {
+    name: "David Miller",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    emoji: "🤖",
+    tag: "International Client",
+    rating: 5.0,
+    review: "Asif is an exceptional AI engineer. He built a custom RAG chatbot with LangChain & OpenAI integration for our customer support. The accuracy and response speed are remarkable. Will hire again!",
+    project: "AI Customer Support Agent with Custom Knowledge Base",
+    category: "Generative AI Solution",
+    glow: "bg-emerald-500/10",
+  },
+  {
+    name: "Dr. Farhana Yasmin",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+    emoji: "📊",
+    tag: "Verified Client",
+    rating: 4.0,
+    review: "রিসার্চ পেপারের ডেটাসেট প্রসেসিং ও প্রিডিক্টিভ মডেল তৈরিতে আসিফের কাজ দারুণ ছিল। কোডিং খুব ক্লিন এবং অ্যানালাইসিসের প্রতিটি ধাপ সুন্দরভাবে ডকুমেন্ট করে দিয়েছেন। ধন্যবাদ!",
+    project: "Healthcare Predictive Analytics & Machine Learning Pipeline",
+    category: "Data Science & ML",
+    glow: "bg-blue-500/10",
   },
 ];
 
@@ -162,12 +198,24 @@ function Home() {
                           </div>
                         </div>
 
-                        {/* 5-Star Rating */}
+                        {/* Star Rating Badge */}
                         <div className="flex items-center gap-1 rounded-full bg-amber-500/15 px-3.5 py-1.5 border border-amber-500/30 shrink-0">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                            <Star
+                              key={i}
+                              className={cn(
+                                "h-4 w-4",
+                                i < Math.floor(reviews[reviewIdx].rating)
+                                  ? "fill-amber-400 text-amber-400"
+                                  : i < reviews[reviewIdx].rating
+                                  ? "fill-amber-400/50 text-amber-400"
+                                  : "text-amber-400/30"
+                              )}
+                            />
                           ))}
-                          <span className="ml-1 text-sm font-extrabold text-amber-500">5.0</span>
+                          <span className="ml-1 text-sm font-extrabold text-amber-500">
+                            {reviews[reviewIdx].rating.toFixed(1)}
+                          </span>
                         </div>
                       </div>
 
