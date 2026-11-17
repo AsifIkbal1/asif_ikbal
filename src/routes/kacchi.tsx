@@ -53,6 +53,16 @@ const reviews = [
     category: "Enterprise Review",
     glow: "bg-sky/10",
   },
+  {
+    name: "Alif",
+    avatar: "/client-alif.png",
+    emoji: "🎧",
+    tag: "Verified Client",
+    review: "অসাধারণ অভিজ্ঞতা! আমার iPhone-এর জন্য মিউজিক ডাউনলোড ও অফলাইনে শোনার অ্যাপটি ঠিক আমার চাহিদা অনুযায়ী তৈরি করে দিয়েছেন। কাজের মান, ডিজাইন এবং পারফরম্যান্স সবকিছুই চমৎকার। খুবই সন্তুষ্ট!",
+    project: "MelodyGo – Your music on the go",
+    category: "iOS App Feedback",
+    glow: "bg-amber-500/10",
+  },
 ];
 
 function Kacchi() {
