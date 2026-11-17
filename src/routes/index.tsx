@@ -71,12 +71,13 @@ function Home() {
               
               <div className="relative aspect-video w-full overflow-hidden rounded-[1.3rem] bg-black shadow-inner">
                 <video
-                  src="https://drive.google.com/uc?export=download&id=1zRSRMkOT4btvO-oBDqGbPO1rK5ZO_YZr"
+                  src="/demo-video.mp4"
                   controls
                   playsInline
                   preload="metadata"
                   className="h-full w-full object-contain"
                 >
+                  <source src="/demo-video.mp4" type="video/mp4" />
                   <p>Your browser does not support the video tag.</p>
                 </video>
               </div>
