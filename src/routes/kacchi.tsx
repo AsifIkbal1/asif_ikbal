@@ -115,8 +115,14 @@ function Kacchi() {
                     </p>
                   </div>
 
-                  <div className="mt-2.5 flex items-center justify-end text-[11px] text-muted-foreground italic">
-                    Service Feedback
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span className="text-muted-foreground font-medium">
+                      <span className="text-foreground/80 font-semibold">Project:</span>{" "}
+                      <span className="text-primary font-medium">OS Toolkit: A Linux-Based System Monitoring and Management Tool</span>
+                    </span>
+                    <span className="text-[11px] text-muted-foreground/75 italic">
+                      Service Feedback
+                    </span>
                   </div>
                 </div>
               </motion.div>
