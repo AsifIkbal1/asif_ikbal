@@ -68,64 +68,128 @@ function Kacchi() {
                 💳 {site.kacchi.cta}
               </motion.button>
 
-              {/* Client Review Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                whileHover={{ y: -4 }}
-                className="glass shadow-soft relative mx-auto mt-12 max-w-xl overflow-hidden rounded-[2rem] border border-border/70 bg-card/75 p-5 text-left backdrop-blur-xl sm:p-6"
-              >
-                <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/10 blur-xl" />
-                <div className="absolute -left-4 -bottom-4 h-24 w-24 rounded-full bg-bubblegum/10 blur-xl" />
+              {/* Client Reviews Section */}
+              <div className="mx-auto mt-12 max-w-xl space-y-6">
+                {/* Review 1: Kangkhita */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  whileHover={{ y: -4 }}
+                  className="glass shadow-soft relative overflow-hidden rounded-[2rem] border border-border/70 bg-card/75 p-5 text-left backdrop-blur-xl sm:p-6"
+                >
+                  <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/10 blur-xl" />
+                  <div className="absolute -left-4 -bottom-4 h-24 w-24 rounded-full bg-bubblegum/10 blur-xl" />
 
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="relative">
-                        <img
-                          src="/client-avatar.png"
-                          alt="Kangkhita"
-                          className="h-12 w-12 rounded-full border-2 border-primary/40 object-cover shadow-sm sm:h-14 sm:w-14"
-                        />
-                        <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-card text-[11px] shadow">
-                          🌸
-                        </span>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="relative">
+                          <img
+                            src="/client-avatar.png"
+                            alt="Kangkhita"
+                            className="h-12 w-12 rounded-full border-2 border-primary/40 object-cover shadow-sm sm:h-14 sm:w-14"
+                          />
+                          <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-card text-[11px] shadow">
+                            🌸
+                          </span>
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold tracking-tight text-foreground sm:text-xl">~Kangkhita</h4>
+                          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-500">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> Verified Client
+                          </span>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="text-lg font-bold tracking-tight text-foreground sm:text-xl">~Kangkhita</h4>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-500">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> Verified Client
-                        </span>
+
+                      {/* 5-Star Rating */}
+                      <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-3 py-1 border border-amber-500/20">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                        ))}
+                        <span className="ml-1 text-xs font-bold text-amber-400">5.0</span>
                       </div>
                     </div>
 
-                    {/* 5-Star Rating */}
-                    <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-3 py-1 border border-amber-500/20">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                      ))}
-                      <span className="ml-1 text-xs font-bold text-amber-400">5.0</span>
+                    <div className="mt-4 rounded-xl bg-secondary/40 p-4 border border-border/30">
+                      <p className="text-sm leading-relaxed text-foreground/90 sm:text-base font-medium">
+                        &ldquo;কাজটি অসাধারণ হয়েছে! আমার প্রত্যাশার চেয়েও ভালো সার্ভিস পেয়েছি। খুবই আন্তরিক ও পেশাদারভাবে কাজটি সম্পন্ন করেছেন। অবশ্যই আবারও কাজ করব। highly recommended!&rdquo;
+                      </p>
+                    </div>
+
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <span className="text-muted-foreground font-medium">
+                        <span className="text-foreground/80 font-semibold">Project:</span>{" "}
+                        <span className="text-primary font-medium">OS Toolkit: A Linux-Based System Monitoring and Management Tool</span>
+                      </span>
+                      <span className="text-[11px] text-muted-foreground/75 italic">
+                        Service Feedback
+                      </span>
                     </div>
                   </div>
+                </motion.div>
 
-                  <div className="mt-4 rounded-xl bg-secondary/40 p-4 border border-border/30">
-                    <p className="text-sm leading-relaxed text-foreground/90 sm:text-base font-medium">
-                      &ldquo;কাজটি অসাধারণ হয়েছে! আমার প্রত্যাশার চেয়েও ভালো সার্ভিস পেয়েছি। খুবই আন্তরিক ও পেশাদারভাবে কাজটি সম্পন্ন করেছেন। অবশ্যই আবারও কাজ করব। highly recommended!&rdquo;
-                    </p>
-                  </div>
+                {/* Review 2: Ritorica Techno Commercial Team */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.45, duration: 0.5 }}
+                  whileHover={{ y: -4 }}
+                  className="glass shadow-soft relative overflow-hidden rounded-[2rem] border border-border/70 bg-card/75 p-5 text-left backdrop-blur-xl sm:p-6"
+                >
+                  <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-sky/10 blur-xl" />
+                  <div className="absolute -left-4 -bottom-4 h-24 w-24 rounded-full bg-primary/10 blur-xl" />
 
-                  <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
-                    <span className="text-muted-foreground font-medium">
-                      <span className="text-foreground/80 font-semibold">Project:</span>{" "}
-                      <span className="text-primary font-medium">OS Toolkit: A Linux-Based System Monitoring and Management Tool</span>
-                    </span>
-                    <span className="text-[11px] text-muted-foreground/75 italic">
-                      Service Feedback
-                    </span>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="relative">
+                          <img
+                            src="/client-ritorica.png"
+                            alt="Ritorica Techno Commercial Team"
+                            className="h-12 w-12 rounded-full border-2 border-primary/40 bg-white object-cover shadow-sm sm:h-14 sm:w-14"
+                          />
+                          <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-card text-[11px] shadow">
+                            🏢
+                          </span>
+                        </div>
+                        <div>
+                          <h4 className="text-base font-bold tracking-tight text-foreground sm:text-lg">
+                            Ritorica Techno Commercial Team
+                          </h4>
+                          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-500">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> Verified Enterprise Client
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* 5-Star Rating */}
+                      <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-3 py-1 border border-amber-500/20 shrink-0">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                        ))}
+                        <span className="ml-1 text-xs font-bold text-amber-400">5.0</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 rounded-xl bg-secondary/40 p-4 border border-border/30">
+                      <p className="text-sm leading-relaxed text-foreground/90 sm:text-base font-medium">
+                        &ldquo;Excellent work! The Bulk SMS platform developed for Ritorica exceeded our expectations. The system is professional, user-friendly, and works smoothly. Very satisfied with the quality and dedication. Highly recommended!&rdquo;
+                      </p>
+                    </div>
+
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <span className="text-muted-foreground font-medium">
+                        <span className="text-foreground/80 font-semibold">Project:</span>{" "}
+                        <span className="text-primary font-medium">Bulk SMS SaaS platform</span>
+                      </span>
+                      <span className="text-[11px] text-muted-foreground/75 italic">
+                        Enterprise Review
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             </motion.div>
           ) : (
             <motion.div key="pay" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }}>
