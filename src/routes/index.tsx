@@ -48,6 +48,41 @@ function Home() {
         </div>
       </section>
 
+      {/* Video Showcase Section */}
+      <section className="relative px-4 py-12 md:py-16">
+        <div className="mx-auto max-w-5xl">
+          <Reveal className="mb-8 text-center">
+            <span className="glass shadow-soft inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-primary">
+              <Sparkles className="h-3.5 w-3.5" /> Platform Overview Video
+            </span>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
+              See How It Works in Action 🎬
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground md:text-lg">
+              Watch how custom software, SaaS, and AI automation transform your ideas into reality.
+            </p>
+          </Reveal>
+
+          {/* Glowing Video Frame */}
+          <Reveal delay={0.15}>
+            <div className="relative mx-auto overflow-hidden rounded-[2rem] border-2 border-primary/30 bg-card/60 p-2 shadow-2xl backdrop-blur-xl md:rounded-[2.5rem] md:p-3">
+              <div className="absolute -left-20 -top-20 h-56 w-56 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-bubblegum/20 blur-3xl pointer-events-none" />
+              
+              <div className="relative aspect-video w-full overflow-hidden rounded-[1.5rem] bg-black/90 shadow-inner md:rounded-[2rem]">
+                <iframe
+                  src="https://drive.google.com/file/d/1zRSRMkOT4btvO-oBDqGbPO1rK5ZO_YZr/preview"
+                  title="Platform Overview Video"
+                  className="h-full w-full border-0"
+                  allow="autoplay; encrypted-media; fullscreen"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Services */}
       <section className="px-4 py-16">
         <div className="mx-auto max-w-6xl">
