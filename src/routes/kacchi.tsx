@@ -70,57 +70,54 @@ function Kacchi() {
 
               {/* Client Review Card */}
               <motion.div
-                initial={{ opacity: 0, y: 35 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.6 }}
-                whileHover={{ y: -6 }}
-                className="glass shadow-soft relative mt-16 overflow-hidden rounded-[2.5rem] border border-border/80 bg-card/60 p-6 text-left backdrop-blur-xl md:p-8"
+                transition={{ delay: 0.3, duration: 0.5 }}
+                whileHover={{ y: -4 }}
+                className="glass shadow-soft relative mx-auto mt-12 max-w-xl overflow-hidden rounded-[2rem] border border-border/70 bg-card/75 p-5 text-left backdrop-blur-xl sm:p-6"
               >
-                <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-primary/10 blur-2xl" />
-                <div className="absolute -left-6 -bottom-6 h-32 w-32 rounded-full bg-bubblegum/10 blur-2xl" />
+                <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/10 blur-xl" />
+                <div className="absolute -left-4 -bottom-4 h-24 w-24 rounded-full bg-bubblegum/10 blur-xl" />
 
                 <div className="relative z-10">
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
                       <div className="relative">
                         <img
                           src="/client-avatar.png"
                           alt="Kangkhita"
-                          className="h-16 w-16 rounded-full border-2 border-primary/50 object-cover shadow-md md:h-18 md:w-18"
+                          className="h-12 w-12 rounded-full border-2 border-primary/40 object-cover shadow-sm sm:h-14 sm:w-14"
                         />
-                        <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-card text-xs shadow">
+                        <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-card text-[11px] shadow">
                           🌸
                         </span>
                       </div>
                       <div>
-                        <div className="flex items-center gap-2">
-                          <h4 className="text-xl font-bold tracking-tight text-foreground md:text-2xl">~Kangkhita</h4>
-                        </div>
-                        <p className="font-mono text-sm font-medium text-muted-foreground">+880 1917-281090</p>
+                        <h4 className="text-lg font-bold tracking-tight text-foreground sm:text-xl">~Kangkhita</h4>
+                        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-500">
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> Verified Client
+                        </span>
                       </div>
                     </div>
 
                     {/* 5-Star Rating */}
-                    <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-4 py-1.5 border border-amber-500/20">
+                    <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-3 py-1 border border-amber-500/20">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                        <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
                       ))}
                       <span className="ml-1 text-xs font-bold text-amber-400">5.0</span>
                     </div>
                   </div>
 
-                  <div className="relative mt-5 rounded-2xl bg-secondary/50 p-5 md:p-6 border border-border/40">
-                    <Quote className="absolute right-4 top-3 h-8 w-8 text-primary/15" />
-                    <p className="text-base leading-relaxed text-foreground/90 md:text-lg font-medium">
+                  <div className="relative mt-4 rounded-xl bg-secondary/40 p-4 border border-border/30">
+                    <Quote className="absolute right-3 top-2.5 h-6 w-6 text-primary/15" />
+                    <p className="text-sm leading-relaxed text-foreground/90 sm:text-base font-medium">
                       &ldquo;কাজটি অসাধারণ হয়েছে! আমার প্রত্যাশার চেয়েও ভালো সার্ভিস পেয়েছি। খুবই আন্তরিক ও পেশাদারভাবে কাজটি সম্পন্ন করেছেন। অবশ্যই আবারও কাজ করব। highly recommended!&rdquo;
                     </p>
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-                    <span className="inline-flex items-center gap-1.5 font-medium text-emerald-500">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> Verified Client Review
-                    </span>
-                    <span className="italic">Service Feedback</span>
+                  <div className="mt-2.5 flex items-center justify-end text-[11px] text-muted-foreground italic">
+                    Service Feedback
                   </div>
                 </div>
               </motion.div>
