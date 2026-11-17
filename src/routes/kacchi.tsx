@@ -94,7 +94,7 @@ function Kacchi() {
 
               {/* Client Reviews Carousel (Slide Left to Right) */}
               <div className="relative mx-auto mt-12 max-w-xl">
-                <div className="relative overflow-hidden rounded-[2rem]">
+                <div className="relative overflow-visible py-2">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
                       key={reviewIdx}
@@ -102,9 +102,11 @@ function Kacchi() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 60 }}
                       transition={{ duration: 0.35, ease: "easeInOut" }}
-                      className="glass shadow-soft relative overflow-hidden rounded-[2rem] border border-border/70 bg-card/75 p-5 text-left backdrop-blur-xl sm:p-6"
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      className="glass shadow-soft group relative cursor-pointer overflow-hidden rounded-[2rem] border-2 border-border/70 bg-card/85 p-5 text-left backdrop-blur-xl transition-all duration-300 hover:border-primary/60 hover:shadow-glow sm:p-6"
                     >
-                      <div className={cn("absolute -right-4 -top-4 h-24 w-24 rounded-full blur-xl", reviews[reviewIdx].glow)} />
+                      <div className={cn("absolute -right-4 -top-4 h-28 w-28 rounded-full blur-xl transition-all duration-500 group-hover:scale-150 group-hover:opacity-100", reviews[reviewIdx].glow)} />
+                      <div className="absolute -left-4 -bottom-4 h-24 w-24 rounded-full bg-primary/10 blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                       <div className="relative z-10">
                         <div className="flex items-center justify-between gap-3">
