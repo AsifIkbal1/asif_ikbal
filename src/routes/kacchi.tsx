@@ -109,8 +109,7 @@ function Kacchi() {
                     </div>
                   </div>
 
-                  <div className="relative mt-4 rounded-xl bg-secondary/40 p-4 border border-border/30">
-                    <Quote className="absolute right-3 top-2.5 h-6 w-6 text-primary/15" />
+                  <div className="mt-4 rounded-xl bg-secondary/40 p-4 border border-border/30">
                     <p className="text-sm leading-relaxed text-foreground/90 sm:text-base font-medium">
                       &ldquo;কাজটি অসাধারণ হয়েছে! আমার প্রত্যাশার চেয়েও ভালো সার্ভিস পেয়েছি। খুবই আন্তরিক ও পেশাদারভাবে কাজটি সম্পন্ন করেছেন। অবশ্যই আবারও কাজ করব। highly recommended!&rdquo;
                     </p>
