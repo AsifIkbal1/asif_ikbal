@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, Check, ChevronLeft, ChevronRight, Copy, CreditCard, Globe, MessageCircle, Star } from "lucide-react";
+import { ArrowLeft, Check, Copy, CreditCard, Globe, MessageCircle } from "lucide-react";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import confetti from "canvas-confetti";
 import { site } from "@/lib/site";
@@ -32,42 +32,8 @@ const mobile: { id: Method; emoji: string; tone: string }[] = [
   { id: "Upay", emoji: "💙", tone: "bg-sky/15 text-sky" },
 ];
 
-const reviews = [
-  {
-    name: "~Kangkhita",
-    avatar: "/client-avatar.png",
-    emoji: "🌸",
-    tag: "Verified Client",
-    review: "কাজটি অসাধারণ হয়েছে! আমার প্রত্যাশার চেয়েও ভালো সার্ভিস পেয়েছি। খুবই আন্তরিক ও পেশাদারভাবে কাজটি সম্পন্ন করেছেন। অবশ্যই আবারও কাজ করব। highly recommended!",
-    project: "OS Toolkit: A Linux-Based System Monitoring and Management Tool",
-    category: "Service Feedback",
-    glow: "bg-primary/10",
-  },
-  {
-    name: "Ritorica Techno Commercial Team",
-    avatar: "/client-ritorica.png",
-    emoji: "🏢",
-    tag: "Verified Enterprise Client",
-    review: "Excellent work! The Bulk SMS platform developed for Ritorica exceeded our expectations. The system is professional, user-friendly, and works smoothly. Very satisfied with the quality and dedication. Highly recommended!",
-    project: "Bulk SMS SaaS platform",
-    category: "Enterprise Review",
-    glow: "bg-sky/10",
-  },
-  {
-    name: "Alif",
-    avatar: "/client-alif.png",
-    emoji: "🎧",
-    tag: "Verified Client",
-    review: "অসাধারণ অভিজ্ঞতা! আমার iPhone-এর জন্য মিউজিক ডাউনলোড ও অফলাইনে শোনার অ্যাপটি ঠিক আমার চাহিদা অনুযায়ী তৈরি করে দিয়েছেন। কাজের মান, ডিজাইন এবং পারফরম্যান্স সবকিছুই চমৎকার। খুবই সন্তুষ্ট!",
-    project: "MelodyGo – Your music on the go",
-    category: "iOS App Feedback",
-    glow: "bg-amber-500/10",
-  },
-];
-
 function Kacchi() {
   const [showPay, setShowPay] = useState(false);
-  const [reviewIdx, setReviewIdx] = useState(0);
   return (
     <section className="relative px-4 pb-12 pt-16 md:pt-24">
       <Blobs />
@@ -101,112 +67,6 @@ function Kacchi() {
               >
                 💳 {site.kacchi.cta}
               </motion.button>
-
-              {/* Client Reviews Carousel (Slide Left to Right) */}
-              <div className="relative mx-auto mt-12 max-w-xl">
-                <div className="relative overflow-visible py-2">
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.div
-                      key={reviewIdx}
-                      initial={{ opacity: 0, x: -60 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 60 }}
-                      transition={{ duration: 0.35, ease: "easeInOut" }}
-                      whileHover={{ y: -8, scale: 1.02 }}
-                      className="glass shadow-soft group relative cursor-pointer overflow-hidden rounded-[2rem] border-2 border-border/70 bg-card/85 p-5 text-left backdrop-blur-xl transition-all duration-300 hover:border-primary/60 hover:shadow-glow sm:p-6"
-                    >
-                      <div className={cn("absolute -right-4 -top-4 h-28 w-28 rounded-full blur-xl transition-all duration-500 group-hover:scale-150 group-hover:opacity-100", reviews[reviewIdx].glow)} />
-                      <div className="absolute -left-4 -bottom-4 h-24 w-24 rounded-full bg-primary/10 blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                      <div className="relative z-10">
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-3">
-                            <div className="relative">
-                              <img
-                                src={reviews[reviewIdx].avatar}
-                                alt={reviews[reviewIdx].name}
-                                className="h-12 w-12 rounded-full border-2 border-primary/40 bg-white object-cover shadow-sm sm:h-14 sm:w-14"
-                              />
-                              <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-card text-[11px] shadow">
-                                {reviews[reviewIdx].emoji}
-                              </span>
-                            </div>
-                            <div>
-                              <h4 className="text-base font-bold tracking-tight text-foreground sm:text-lg">
-                                {reviews[reviewIdx].name}
-                              </h4>
-                              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-500">
-                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> {reviews[reviewIdx].tag}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* 5-Star Rating */}
-                          <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-3 py-1 border border-amber-500/20 shrink-0">
-                            {[...Array(5)].map((_, i) => (
-                              <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                            ))}
-                            <span className="ml-1 text-xs font-bold text-amber-400">5.0</span>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 rounded-xl bg-secondary/40 p-4 border border-border/30">
-                          <p className="text-sm leading-relaxed text-foreground/90 sm:text-base font-medium">
-                            &ldquo;{reviews[reviewIdx].review}&rdquo;
-                          </p>
-                        </div>
-
-                        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
-                          <span className="text-muted-foreground font-medium">
-                            <span className="text-foreground/80 font-semibold">Project:</span>{" "}
-                            <span className="text-primary font-medium">{reviews[reviewIdx].project}</span>
-                          </span>
-                          <span className="text-[11px] text-muted-foreground/75 italic">
-                            {reviews[reviewIdx].category}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Left / Right Navigation Controls */}
-                <div className="mt-4 flex items-center justify-between px-2">
-                  <div className="flex items-center gap-1.5">
-                    {reviews.map((_, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => setReviewIdx(i)}
-                        className={cn(
-                          "h-2 rounded-full transition-all duration-300",
-                          reviewIdx === i ? "w-6 bg-primary" : "w-2 bg-muted hover:bg-muted-foreground/50"
-                        )}
-                        aria-label={`Go to review ${i + 1}`}
-                      />
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setReviewIdx((prev) => (prev - 1 + reviews.length) % reviews.length)}
-                      className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition hover:border-primary hover:text-foreground"
-                      aria-label="Previous review"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setReviewIdx((prev) => (prev + 1) % reviews.length)}
-                      className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition hover:border-primary hover:text-foreground"
-                      aria-label="Next review"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
             </motion.div>
           ) : (
             <motion.div key="pay" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }}>
