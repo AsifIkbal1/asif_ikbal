@@ -89,6 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Asif Ikbal — Software, Websites, SaaS & Automation" },
       { name: "description", content: "Freelance developer & automation expert. Add an order for software, websites, SaaS or n8n automation." },
       { name: "author", content: "Asif Ikbal" },
+      { name: "google-site-verification", content: "OGtrqbeXTqDiqbyQJZLONBrT-UcyFx9grDAoQr1UQy8" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
