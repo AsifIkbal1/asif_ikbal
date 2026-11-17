@@ -49,34 +49,36 @@ function Home() {
       </section>
 
       {/* Video Showcase Section */}
-      <section className="relative px-4 py-12 md:py-16">
-        <div className="mx-auto max-w-5xl">
-          <Reveal className="mb-8 text-center">
+      <section className="relative px-4 py-8 md:py-12">
+        <div className="mx-auto max-w-3xl">
+          <Reveal className="mb-6 text-center">
             <span className="glass shadow-soft inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-primary">
               <Sparkles className="h-3.5 w-3.5" /> Platform Overview Video
             </span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-4xl">
               See How It Works in Action 🎬
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base text-muted-foreground md:text-lg">
+            <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground md:text-base">
               Watch how custom software, SaaS, and AI automation transform your ideas into reality.
             </p>
           </Reveal>
 
-          {/* Glowing Video Frame */}
+          {/* Glowing Compact Video Frame */}
           <Reveal delay={0.15}>
-            <div className="relative mx-auto overflow-hidden rounded-[2rem] border-2 border-primary/30 bg-card/60 p-2 shadow-2xl backdrop-blur-xl md:rounded-[2.5rem] md:p-3">
-              <div className="absolute -left-20 -top-20 h-56 w-56 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-bubblegum/20 blur-3xl pointer-events-none" />
+            <div className="relative mx-auto overflow-hidden rounded-[1.8rem] border border-border/80 bg-card/70 p-2 shadow-xl backdrop-blur-xl transition hover:border-primary/50 sm:p-2.5">
+              <div className="absolute -left-16 -top-16 h-40 w-40 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-16 -right-16 h-40 w-40 rounded-full bg-bubblegum/20 blur-3xl pointer-events-none" />
               
-              <div className="relative aspect-video w-full overflow-hidden rounded-[1.5rem] bg-black/90 shadow-inner md:rounded-[2rem]">
-                <iframe
-                  src="https://drive.google.com/file/d/1zRSRMkOT4btvO-oBDqGbPO1rK5ZO_YZr/preview"
-                  title="Platform Overview Video"
-                  className="h-full w-full border-0"
-                  allow="autoplay; encrypted-media; fullscreen"
-                  allowFullScreen
-                />
+              <div className="relative aspect-video w-full overflow-hidden rounded-[1.3rem] bg-black shadow-inner">
+                <video
+                  src="https://drive.google.com/uc?export=download&id=1zRSRMkOT4btvO-oBDqGbPO1rK5ZO_YZr"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-contain"
+                >
+                  <p>Your browser does not support the video tag.</p>
+                </video>
               </div>
             </div>
           </Reveal>
