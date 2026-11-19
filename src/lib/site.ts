@@ -57,17 +57,31 @@ export const site = {
   about: {
     title: "AI, SaaS & Automation Specialist",
     intro:
-      "Dynamic Machine Learning & Automation professional with 7+ years of experience in AI, data science, machine learning, workflow automation and predictive analytics. I build AI-powered workflows, intelligent apps, chatbots, voice automation, forecasting models and process digitalization solutions.",
+      "Dynamic Machine Learning & Automation Professional with 5+ years of experience in AI, data science, machine learning, workflow automation, and predictive analytics. Proven ability to develop AI-powered workflows, intelligent applications, chatbots, voice automation, forecasting models, and process digitalization solutions.",
     highlights: [
-      "Guided 200+ students in Python, Machine Learning, data analysis and project development",
-      "Built 550+ AI/ML projects across diverse applications",
-      "Strong in EDA, business analytics, operational optimization and data-driven decisions",
+      "Guided 200+ students in Python, Machine Learning, data analysis, and project development while building 550+ AI/ML projects across diverse applications",
+      "Executive – System & Support (Head of IT and Digital Operation) at Ritorica Information Technology (BD) Ltd.",
+      "Strong analytical skills in EDA, business analytics, operational optimization, and data-driven decision-making",
     ],
     objective:
-      "To work as a Machine Learning & Automation Specialist, driving AI innovation, intelligent automation, predictive analytics and business transformation.",
-    skills: ["Python", "Generative AI", "Agentic AI", "NLP", "LLMs", "RAG", "LangChain", "n8n", "API Integration", "Data Visualization", "Machine Learning", "Predictive Analytics"],
+      "To work as a Machine Learning & Automation Specialist, driving AI innovation, intelligent automation, predictive analytics, and business transformation.",
+    skills: [
+      "Python",
+      "Machine Learning",
+      "Deep Learning",
+      "Generative AI",
+      "Agentic AI & Multi-Agent Systems",
+      "NLP & LLMs",
+      "Retrieval-Augmented Generation (RAG)",
+      "LangChain",
+      "n8n Workflow Automation",
+      "API Integration",
+      "Vector DB (ChromaDB, FAISS, Pinecone)",
+      "Data Visualization (Power BI, Tableau)",
+      "Predictive Analytics & Forecasting",
+    ],
   },
-  resumeUrl: "https://drive.google.com/file/d/1TvoB2jkVTj9jg0PZ0g-3oV-3CH_xlUmv/view?usp=sharing",
+  resumeUrl: "/Md_Asif_Ikbal_Resume.pdf",
   socials: [
     { label: "Facebook", href: "https://www.facebook.com/asifikbalmamun220" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/md-asif-ikbal/" },
