@@ -2,44 +2,59 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Send, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
-import { askAssistant } from "@/lib/chat.functions";
 import { site } from "@/lib/site";
 
-type Msg = { role: "user" | "assistant"; content: string };
+type Msg = { role: "user" | "assistant"; content: string; time?: string };
+
+const WHATSAPP_NUMBER = "8801786961727";
 
 const WELCOME: Msg = {
   role: "assistant",
-  content: "Hi there! 👋 I'm Asif's AI assistant. Ask me anything about his services — software, websites, SaaS, n8n or automation!",
+  content: "Hi there! 👋 I'm Asif. Send me a message here or pick a topic below, and it will connect directly to my personal WhatsApp!",
 };
-const CHIPS = ["What services do you offer?", "How does ordering work?", "I need an automation"];
+
+const CHIPS = [
+  "Hi Asif, I need a website / web app!",
+  "Hi Asif, I need an AI / n8n automation!",
+  "Hi Asif, I want to discuss a custom project!",
+];
 
 export function ChatBubble() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([WELCOME]);
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, loading, open]);
+  }, [messages, open]);
 
-  async function send(text: string) {
+  function sendToWhatsApp(text: string) {
     const content = text.trim();
-    if (!content || loading) return;
+    if (!content) return;
+
+    // Add user message to UI
     const next = [...messages, { role: "user" as const, content }];
     setMessages(next);
     setInput("");
-    setLoading(true);
-    try {
-      const history = next.filter((m) => m !== WELCOME).slice(-20);
-      const res = await askAssistant({ data: { messages: history } });
-      setMessages((m) => [...m, { role: "assistant", content: res.reply }]);
-    } catch {
-      setMessages((m) => [...m, { role: "assistant", content: "Oops, I couldn't reply. Please try again." }]);
-    } finally {
-      setLoading(false);
-    }
+
+    // Simulate instant status and redirect to WhatsApp
+    const encodedMsg = encodeURIComponent(content);
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+
+    // Open WhatsApp in new tab
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+
+    // Add confirmation message from Asif
+    setTimeout(() => {
+      setMessages((m) => [
+        ...m,
+        {
+          role: "assistant",
+          content: "Opening WhatsApp with your message... 💬 If it didn't open automatically, you can click the WhatsApp icon above!",
+        },
+      ]);
+    }, 400);
   }
 
   return (
@@ -55,18 +70,23 @@ export function ChatBubble() {
           >
             <div className="bg-hero-gradient flex items-center justify-between px-5 py-4 text-primary-foreground">
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-primary-foreground/25 text-xl">🤖</span>
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-primary-foreground/25 text-xl">
+                  <FaWhatsapp className="h-6 w-6 text-white" />
+                </span>
                 <div>
-                  <p className="font-semibold leading-tight">Ask Asif's AI</p>
-                  <p className="text-xs opacity-90">Usually replies instantly</p>
+                  <p className="font-semibold leading-tight">Chat with Asif</p>
+                  <p className="text-xs opacity-90 flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                    Direct on WhatsApp
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-1">
                 <a
-                  href="https://wa.me/8801786961727"
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank"
                   rel="noreferrer"
-                  title="Chat directly on WhatsApp"
+                  title="Open WhatsApp directly"
                   className="rounded-full bg-primary-foreground/20 p-2 text-primary-foreground transition hover:bg-primary-foreground/30 hover:scale-105"
                 >
                   <FaWhatsapp className="h-5 w-5" />
@@ -88,36 +108,25 @@ export function ChatBubble() {
                   <div
                     className={
                       m.role === "user"
-                        ? "max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-primary-foreground"
-                        : "max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-bl-md bg-card px-4 py-2.5 shadow-sm"
+                        ? "max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-[#25D366] px-4 py-2.5 text-white font-medium shadow-sm"
+                        : "max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-bl-md bg-card px-4 py-2.5 shadow-sm text-foreground"
                     }
                   >
                     {m.content}
                   </div>
                 </motion.div>
               ))}
-              {messages.length === 1 && !loading && (
-                <div className="flex flex-wrap gap-2 pt-1">
+              {messages.length === 1 && (
+                <div className="flex flex-col gap-2 pt-1">
+                  <p className="text-xs font-semibold text-muted-foreground px-1">Quick message templates:</p>
                   {CHIPS.map((c) => (
                     <button
                       key={c}
-                      onClick={() => send(c)}
-                      className="rounded-full border border-primary/30 bg-card px-3 py-1.5 text-sm text-primary transition hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground"
+                      onClick={() => sendToWhatsApp(c)}
+                      className="text-left rounded-2xl border border-primary/20 bg-card px-3.5 py-2 text-xs sm:text-sm font-medium text-foreground transition hover:-translate-y-0.5 hover:border-[#25D366] hover:bg-[#25D366]/10"
                     >
-                      {c}
+                      💬 {c}
                     </button>
-                  ))}
-                </div>
-              )}
-              {loading && (
-                <div className="flex w-fit gap-1.5 rounded-2xl rounded-bl-md bg-card px-4 py-3 shadow-sm" aria-label="Typing">
-                  {[0, 1, 2].map((d) => (
-                    <motion.span
-                      key={d}
-                      className="h-2 w-2 rounded-full bg-primary"
-                      animate={{ y: [0, -5, 0], opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 0.8, repeat: Infinity, delay: d * 0.15 }}
-                    />
                   ))}
                 </div>
               )}
@@ -126,22 +135,23 @@ export function ChatBubble() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                send(input);
+                sendToWhatsApp(input);
               }}
               className="flex items-center gap-2 border-t border-border bg-card p-3"
             >
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message…"
+                placeholder="Type your WhatsApp message…"
                 maxLength={2000}
-                className="flex-1 rounded-full bg-secondary px-4 py-2.5 outline-none focus:ring-2 focus:ring-ring"
+                className="flex-1 rounded-full bg-secondary px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
               />
               <button
                 type="submit"
-                disabled={!input.trim() || loading}
-                aria-label="Send"
-                className="bg-cta-gradient grid h-11 w-11 place-items-center rounded-full text-primary-foreground transition disabled:opacity-50"
+                disabled={!input.trim()}
+                aria-label="Send via WhatsApp"
+                title="Send message to WhatsApp"
+                className="grid h-11 w-11 place-items-center rounded-full bg-[#25D366] text-white shadow transition hover:brightness-105 active:scale-95 disabled:opacity-50"
               >
                 <Send className="h-5 w-5" />
               </button>
@@ -152,7 +162,7 @@ export function ChatBubble() {
 
       <motion.button
         onClick={() => setOpen((o) => !o)}
-        aria-label={open ? "Close chat" : "Open chat"}
+        aria-label={open ? "Close chat" : "Chat on WhatsApp"}
         animate={open ? { y: 0 } : { y: [0, -8, 0] }}
         transition={{ duration: 1.8, repeat: open ? 0 : Infinity, ease: "easeInOut" }}
         whileHover={{ scale: 1.1 }}
